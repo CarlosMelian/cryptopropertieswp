@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-void: #07080a;
+  --scrollbar-thumb: #2a2c33;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+html {
+  background-color: var(--bg-void);
+}
+
+body {
+  background-color: var(--bg-void);
+  color: #f5f3ee;
+  font-feature-settings: "ss01" on, "ss02" on;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: rgba(201, 165, 59, 0.28);
+  color: #f5f3ee;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #07080a;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 6px;
+}
+
+:focus-visible {
+  outline: 2px solid #c9a53b;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.015)
+    );
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-panel-gold {
+    background: linear-gradient(
+      160deg,
+      rgba(201, 165, 59, 0.1),
+      rgba(201, 165, 59, 0.02)
+    );
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(201, 165, 59, 0.22);
+  }
+
+  .eyebrow {
+    font-family: var(--font-plex-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #c9a53b;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-grain {
+    background-image: url("/noise.svg");
+    background-repeat: repeat;
+  }
+
+  .legal-prose h2 {
+    font-family: var(--font-fraunces);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #f5f3ee;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .legal-prose h2:first-child {
+    margin-top: 0;
+  }
+
+  .legal-prose ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .legal-prose strong {
+    color: #f5f3ee;
+    font-weight: 600;
+  }
+
+  .legal-prose a {
+    color: #e8c468;
+    text-decoration: underline;
+    text-decoration-color: rgba(201, 165, 59, 0.4);
+  }
+}
