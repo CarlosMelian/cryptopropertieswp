@@ -8,10 +8,10 @@ import { BridgeMark } from "@/components/ui/BridgeMark";
 import { Button } from "@/components/ui/Button";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Why Uruguay", href: "#why-uruguay" },
-  { label: "Process", href: "#process" },
-  { label: "Insights", href: "#insights" },
+  { label: "Services", href: "/#services" },
+  { label: "Why Uruguay", href: "/#why-uruguay" },
+  { label: "Process", href: "/#process" },
+  { label: "Insights", href: "/#insights" },
   { label: "Properties", href: "/properties" },
 ];
 

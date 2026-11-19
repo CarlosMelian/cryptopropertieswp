@@ -44,3 +44,4 @@ export interface Article {
   excerpt: string;
   readTime: string;
 }
+export * from "./property";

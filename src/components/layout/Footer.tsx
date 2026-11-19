@@ -6,20 +6,20 @@ const columns = [
   {
     title: "Company",
     links: [
-      { label: "About Us", href: "#trust" },
-      { label: "Why Uruguay", href: "#why-uruguay" },
-      { label: "Our Process", href: "#process" },
-      { label: "Insights", href: "#insights" },
+      { label: "About Us", href: "/#trust" },
+      { label: "Why Uruguay", href: "/#why-uruguay" },
+      { label: "Our Process", href: "/#process" },
+      { label: "Insights", href: "/#insights" },
     ],
   },
   {
     title: "Services",
     links: [
-      { label: "Buy With Crypto", href: "#services" },
-      { label: "Sell To Crypto Investors", href: "#services" },
-      { label: "Crypto Wealth Advisory", href: "#services" },
-      { label: "Residency & Relocation", href: "#services" },
-      { label: "Private Investor Network", href: "#services" },
+      { label: "Buy With Crypto", href: "/#services" },
+      { label: "Sell To Crypto Investors", href: "/#services" },
+      { label: "Crypto Wealth Advisory", href: "/#services" },
+      { label: "Residency & Relocation", href: "/#services" },
+      { label: "Private Investor Network", href: "/#services" },
     ],
   },
   {
@@ -34,9 +34,9 @@ const columns = [
 ];
 
 const socials = [
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Linkedin, href: "/#", label: "LinkedIn" },
+  { icon: Instagram, href: "/#", label: "Instagram" },
+  { icon: Twitter, href: "/#", label: "Twitter" },
 ];
 
 export function Footer() {

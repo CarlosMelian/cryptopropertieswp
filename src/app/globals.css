@@ -44,6 +44,13 @@ body {
   border-radius: 2px;
 }
 
+/* Reserve space for the fixed mobile inquiry bar on property pages */
+@media (max-width: 1023px) {
+  body:has([data-mobile-inquiry-bar]) {
+    padding-bottom: 5.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
