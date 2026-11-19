@@ -20,6 +20,14 @@ export function propertyUrl(slug: string, locale: Locale) {
   return `${siteConfig.url}/${locale}/properties/${slug}`;
 }
 
+/** WhatsApp chat with a prefilled message, or an email fallback if no number is configured. */
+export function contactLink(message: string) {
+  return (
+    whatsappLink(message) ??
+    `mailto:${siteConfig.email}?body=${encodeURIComponent(message)}`
+  );
+}
+
 export function whatsappLink(message: string) {
   if (!siteConfig.whatsappNumber) return null;
   return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;

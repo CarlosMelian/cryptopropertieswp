@@ -34,6 +34,13 @@ export const en = {
   },
 
   common: {
+    whatsapp: {
+      consultation: "Hello CryptoProperties Uruguay, I would like to schedule a private consultation.",
+      services: "Hello CryptoProperties Uruguay, I would like to learn more about your services.",
+      service: "Hello CryptoProperties Uruguay, I would like more information about: {service}.",
+      insights: "Hello CryptoProperties Uruguay, I would like to receive your educational content about investing in Uruguay with crypto.",
+      article: "Hello CryptoProperties Uruguay, I am interested in this topic: {title}.",
+    },
     nav: {
       services: "Services",
       whyUruguay: "Why Uruguay",

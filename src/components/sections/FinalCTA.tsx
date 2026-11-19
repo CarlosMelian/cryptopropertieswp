@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { BridgeMark } from "@/components/ui/BridgeMark";
 import type { HomeDict } from "@/i18n/dictionaries";
 
-export function FinalCTA({ t }: { t: HomeDict["finalCta"] }) {
+export function FinalCTA({ t, consultationHref }: { t: HomeDict["finalCta"]; consultationHref: string }) {
   return (
     <section className="relative overflow-hidden bg-void py-28 sm:py-36">
       <div className="pointer-events-none absolute inset-0 bg-gold-radial opacity-80" />
@@ -19,7 +19,9 @@ export function FinalCTA({ t }: { t: HomeDict["finalCta"] }) {
             {t.text}
           </p>
           <div className="mt-10 flex justify-center">
-            <Button size="lg">{t.cta}</Button>
+            <ButtonLink href={consultationHref} size="lg">
+              {t.cta}
+            </ButtonLink>
           </div>
         </Reveal>
       </div>

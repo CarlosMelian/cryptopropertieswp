@@ -5,7 +5,8 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BridgeMark } from "@/components/ui/BridgeMark";
-import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { contactLink } from "@/lib/site";
 import { useI18n } from "@/i18n/I18nProvider";
 import { localePath } from "@/i18n/config";
 import { LanguageDropdown, LanguageSegmented } from "./LanguageSwitcher";
@@ -15,6 +16,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const { lang, common } = useI18n();
   const t = common.nav;
+  const consultationHref = contactLink(common.whatsapp.consultation);
 
   const navLinks = [
     { label: t.services, href: localePath(lang, "/#services") },
@@ -67,9 +69,9 @@ export function Navbar() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageDropdown />
-          <Button size="md" className="text-[0.8rem]">
+          <ButtonLink href={consultationHref} size="md" className="text-[0.8rem]">
             {t.consultation}
-          </Button>
+          </ButtonLink>
         </div>
 
         <button
@@ -105,9 +107,9 @@ export function Navbar() {
               <div className="mt-1 border-t border-graphite-border pt-5">
                 <LanguageSegmented onSelect={() => setOpen(false)} />
               </div>
-              <Button size="md" className="mt-2 w-full">
+              <ButtonLink href={consultationHref} size="md" className="mt-2 w-full">
                 {t.consultation}
-              </Button>
+              </ButtonLink>
             </nav>
           </motion.div>
         )}

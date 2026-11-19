@@ -1,11 +1,13 @@
 import { ArrowRight } from "lucide-react";
 import { serviceIcons } from "@/lib/data";
-import type { HomeDict } from "@/i18n/dictionaries";
+import type { CommonDict, HomeDict } from "@/i18n/dictionaries";
+import { format } from "@/i18n/config";
+import { contactLink } from "@/lib/site";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Reveal } from "@/components/ui/Reveal";
 
-export function Services({ t }: { t: HomeDict["services"] }) {
+export function Services({ t, wa }: { t: HomeDict["services"]; wa: CommonDict["whatsapp"] }) {
   const serviceItems = t.items.map((item, i) => ({ ...item, icon: serviceIcons[i] }));
   const [featured, ...rest] = serviceItems;
 
@@ -41,6 +43,12 @@ export function Services({ t }: { t: HomeDict["services"] }) {
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {rest.map((service, i) => (
             <Reveal key={service.title} delay={i * 0.06}>
+              <a
+                href={contactLink(format(wa.service, { service: service.title }))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block h-full rounded-2xl"
+              >
               <GlassCard className="group flex h-full flex-col px-7 py-8 transition-all duration-300 hover:-translate-y-1 hover:border-gold/30">
                 <div className="flex items-start justify-between">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 transition-colors duration-300 group-hover:bg-gold/16">
@@ -56,11 +64,12 @@ export function Services({ t }: { t: HomeDict["services"] }) {
                 <p className="mt-3 flex-1 font-body text-sm leading-relaxed text-ink-muted">
                   {service.description}
                 </p>
-                <span className="mt-5 flex items-center gap-1.5 font-body text-sm text-gold-bright opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="mt-5 flex items-center gap-1.5 font-body text-sm text-gold-bright transition-opacity duration-300 lg:opacity-0 lg:group-hover:opacity-100">
                   {t.learnMore}
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </GlassCard>
+              </a>
             </Reveal>
           ))}
         </div>

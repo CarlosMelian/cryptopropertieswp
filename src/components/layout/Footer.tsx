@@ -1,14 +1,13 @@
 import Link from "next/link";
-import { Linkedin, Instagram, Twitter, Mail, MapPin } from "lucide-react";
+import { Linkedin, Instagram, Mail, MapPin } from "lucide-react";
 import { BridgeMark } from "@/components/ui/BridgeMark";
 import { localePath, type Locale } from "@/i18n/config";
 import type { CommonDict } from "@/i18n/dictionaries";
 import { siteConfig } from "@/lib/site";
 
 const socials = [
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/uycryptomonedas", label: "LinkedIn" },
+  { icon: Instagram, href: "https://www.instagram.com/uycryptomonedas", label: "Instagram" },
 ];
 
 export function Footer({ lang, dict }: { lang: Locale; dict: CommonDict }) {
@@ -80,6 +79,8 @@ export function Footer({ lang, dict }: { lang: Locale; dict: CommonDict }) {
                 <a
                   key={s.label}
                   href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={s.label}
                   className="flex h-9 w-9 items-center justify-center rounded-full border border-graphite-border text-ink-muted transition-colors hover:border-gold/40 hover:text-gold-bright"
                 >

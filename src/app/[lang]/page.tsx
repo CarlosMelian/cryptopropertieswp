@@ -11,6 +11,7 @@ import { Education } from "@/components/sections/Education";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, languageAlternates } from "@/i18n/config";
+import { contactLink } from "@/lib/site";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
@@ -20,19 +21,21 @@ export async function generateMetadata({ params }: PageProps<"/[lang]">): Promis
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const { home } = getDictionary(lang);
+  const { home, common } = getDictionary(lang);
+  const wa = common.whatsapp;
+  const consultationHref = contactLink(wa.consultation);
 
   return (
     <>
-      <Hero t={home.hero} />
+      <Hero t={home.hero} consultationHref={consultationHref} servicesHref={contactLink(wa.services)} />
       <TrustCredibility t={home.trust} />
-      <Services t={home.services} />
+      <Services t={home.services} wa={wa} />
       <WhyUruguay t={home.whyUruguay} />
       <HowItWorks t={home.process} />
       <InvestmentPhilosophy t={home.philosophy} />
       <Testimonials t={home.testimonials} />
-      <Education t={home.insights} />
-      <FinalCTA t={home.finalCta} />
+      <Education t={home.insights} wa={wa} />
+      <FinalCTA t={home.finalCta} consultationHref={consultationHref} />
     </>
   );
 }

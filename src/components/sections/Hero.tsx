@@ -2,13 +2,21 @@
 
 import { motion } from "framer-motion";
 import { ArrowDown, Bitcoin, Building2, Coins, ShieldCheck, Clock3 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { GlassCard } from "@/components/ui/GlassCard";
 import type { HomeDict } from "@/i18n/dictionaries";
 
 const cardIcons = [Coins, Clock3, ShieldCheck];
 
-export function Hero({ t }: { t: HomeDict["hero"] }) {
+export function Hero({
+  t,
+  consultationHref,
+  servicesHref,
+}: {
+  t: HomeDict["hero"];
+  consultationHref: string;
+  servicesHref: string;
+}) {
   const credentials = t.credentials;
   const floatingCards = t.cards.map((card, i) => ({ ...card, icon: cardIcons[i] }));
   return (
@@ -85,10 +93,12 @@ export function Hero({ t }: { t: HomeDict["hero"] }) {
           transition={{ duration: 0.8, delay: 0.42 }}
           className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
         >
-          <Button size="lg">{t.ctaPrimary}</Button>
-          <Button size="lg" variant="secondary" icon={false}>
+          <ButtonLink href={consultationHref} size="lg">
+            {t.ctaPrimary}
+          </ButtonLink>
+          <ButtonLink href={servicesHref} size="lg" variant="secondary" icon={false}>
             {t.ctaSecondary}
-          </Button>
+          </ButtonLink>
         </motion.div>
 
         {/* Bridge signature graphic */}

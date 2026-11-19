@@ -1,11 +1,13 @@
 import { ArrowRight } from "lucide-react";
-import type { HomeDict } from "@/i18n/dictionaries";
+import type { CommonDict, HomeDict } from "@/i18n/dictionaries";
+import { format } from "@/i18n/config";
+import { contactLink } from "@/lib/site";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Reveal } from "@/components/ui/Reveal";
-import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 
-export function Education({ t }: { t: HomeDict["insights"] }) {
+export function Education({ t, wa }: { t: HomeDict["insights"]; wa: CommonDict["whatsapp"] }) {
   const articles = t.items;
   return (
     <section id="insights" className="relative bg-graphite/30 py-24 sm:py-32">
@@ -17,14 +19,20 @@ export function Education({ t }: { t: HomeDict["insights"] }) {
               {t.title}
             </h2>
           </div>
-          <Button variant="secondary" size="md" className="shrink-0">
+          <ButtonLink href={contactLink(wa.insights)} variant="secondary" size="md" className="shrink-0">
             {t.viewAll}
-          </Button>
+          </ButtonLink>
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {articles.map((article, i) => (
             <Reveal key={article.title} delay={i * 0.07}>
+              <a
+                href={contactLink(format(wa.article, { title: article.title }))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block h-full rounded-2xl"
+              >
               <GlassCard className="group flex h-full flex-col px-7 py-8 transition-all duration-300 hover:-translate-y-1 hover:border-gold/30">
                 <span className="font-mono text-[0.65rem] uppercase tracking-widest2 text-gold-bright">
                   {article.category}
@@ -45,6 +53,7 @@ export function Education({ t }: { t: HomeDict["insights"] }) {
                   </span>
                 </div>
               </GlassCard>
+              </a>
             </Reveal>
           ))}
         </div>

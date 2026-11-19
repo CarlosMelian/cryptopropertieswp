@@ -21,6 +21,13 @@ export const es: Dictionary = {
   },
 
   common: {
+    whatsapp: {
+      consultation: "Hola CryptoProperties Uruguay, me gustaría agendar una consulta privada.",
+      services: "Hola CryptoProperties Uruguay, me gustaría conocer más sobre sus servicios.",
+      service: "Hola CryptoProperties Uruguay, me gustaría recibir más información sobre: {service}.",
+      insights: "Hola CryptoProperties Uruguay, me gustaría recibir su contenido educativo sobre cómo invertir en Uruguay con cripto.",
+      article: "Hola CryptoProperties Uruguay, me interesa este tema: {title}.",
+    },
     nav: {
       services: "Servicios",
       whyUruguay: "Por qué Uruguay",
