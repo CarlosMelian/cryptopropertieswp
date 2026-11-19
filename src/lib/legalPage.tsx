@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LegalLayout } from "@/components/legal/LegalLayout";
 import { getDictionary } from "@/i18n/dictionaries";
-import { isLocale, languageAlternates } from "@/i18n/config";
+import { isLocale } from "@/i18n/config";
+import { pageMetadata } from "@/lib/seo";
 
 type LegalKey = "privacy" | "terms" | "risk" | "compliance";
 type Params = { params: Promise<{ lang: string }> };
@@ -13,11 +14,7 @@ export function legalPage(key: LegalKey) {
     const { lang } = await params;
     if (!isLocale(lang)) return {};
     const doc = getDictionary(lang).legal[key];
-    return {
-      title: doc.title,
-      description: doc.description,
-      alternates: { canonical: `/${lang}/legal/${key}`, languages: languageAlternates(`/legal/${key}`) },
-    };
+    return pageMetadata({ lang, path: `/legal/${key}`, title: doc.title, description: doc.description });
   }
 
   async function Page({ params }: Params) {

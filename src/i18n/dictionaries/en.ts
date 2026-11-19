@@ -29,8 +29,17 @@ export const en = {
       "Uruguay tax residency",
       "Uruguay real estate for foreigners",
       "crypto wealth advisory",
+      "UyCryptomonedas",
+      "buy real estate with Bitcoin",
+      "Punta del Este property for sale",
+      "Montevideo apartments for sale",
     ],
     schemaDescription: "Advisory firm connecting cryptocurrency investors with Uruguayan real estate.",
+    homeTitle: "Buy Property in Uruguay with Crypto | CryptoProperties Uruguay",
+    homeDescription:
+      "Buy, sell and invest in Uruguayan real estate with Bitcoin, USDT and other cryptocurrencies, with legal, notarial and compliance support. A UyCryptomonedas company.",
+    ogTagline: "Real estate in Uruguay for crypto investors",
+    ogParent: "A UyCryptomonedas company",
   },
 
   common: {
@@ -54,6 +63,9 @@ export const en = {
     footer: {
       tagline: "The bridge between crypto wealth and Uruguayan real estate. Legal, secure, and built for the modern investor.",
       location: "Montevideo, Uruguay",
+      parentPrefix: "A company of",
+      parentDescription:
+        "UyCryptomonedas buys and sells USDT, Bitcoin and Ethereum in Uruguay, with offices in Montevideo, Punta del Este and Mercedes.",
       company: "Company",
       services: "Services",
       legal: "Legal",
@@ -138,6 +150,11 @@ export const en = {
       ],
       stats: ["Capital Facilitated (USD)", "International Clients", "Transactions Structured", "Countries Served"],
       illustrative: "Illustrative figures",
+      parent: {
+        eyebrow: "Our parent company",
+        text: "CryptoProperties Uruguay is part of UyCryptomonedas, which buys and sells USDT, Bitcoin and Ethereum in Uruguay and has offices in Montevideo, Punta del Este and Mercedes.",
+        cta: "Visit uycryptomonedas.com",
+      },
     },
     services: {
       eyebrow: "Services",
@@ -364,9 +381,9 @@ export const en = {
 
   properties: {
     meta: {
-      title: "Properties For Sale In Uruguay",
+      title: "Properties for Sale in Uruguay — Buy with Crypto",
       description:
-        "A curated portfolio of premium Uruguayan real estate: coastal villas in Punta del Este and José Ignacio, Montevideo residences, countryside chacras and commercial assets. Acquisitions with cryptocurrency guided case by case.",
+        "Premium properties for sale in Uruguay: homes in Punta del Este, José Ignacio and Montevideo, farms and commercial assets. Guidance for buying with crypto.",
       ogDescription: "Curated premium real estate across Punta del Este, José Ignacio and Montevideo.",
     },
     hero: {
@@ -443,6 +460,8 @@ export const en = {
       about: "About the property",
       amenities: "Features & Amenities",
       metaSuffix: "{type} in {location}.",
+      metaDescription: "{type} for sale in {location}{facts}. Asking price {price}. Guidance for purchases funded with cryptocurrency.",
+      metaLand: "of land",
       relatedEyebrow: "Continue exploring",
       relatedTitle: "You may also consider",
       viewAll: "View all properties",

@@ -7,35 +7,49 @@ import { Reveal } from "@/components/ui/Reveal";
 import { buttonVariants } from "@/components/ui/buttonVariants";
 import { BridgeMark } from "@/components/ui/BridgeMark";
 import { PropertyCatalog, PropertyCatalogFromUrl } from "@/components/properties/PropertyCatalog";
-import { getAllProperties } from "@/lib/properties";
+import { getAllProperties, formatPrice } from "@/lib/properties";
+import { breadcrumbJsonLd, ids, jsonLdString, pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { getDictionary } from "@/i18n/dictionaries";
-import { isLocale, languageAlternates } from "@/i18n/config";
+import { isLocale } from "@/i18n/config";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/properties">): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const { meta } = getDictionary(lang).properties;
-  return {
-    title: meta.title,
-    description: meta.description,
-    alternates: { canonical: `/${lang}/properties`, languages: languageAlternates("/properties") },
-    openGraph: {
-      title: `${meta.title} | ${siteConfig.name}`,
-      description: meta.ogDescription,
-      url: `/${lang}/properties`,
-    },
-  };
+  return pageMetadata({ lang, path: "/properties", title: meta.title, description: meta.description });
 }
 
 export default async function PropertiesPage({ params }: PageProps<"/[lang]/properties">) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const t = getDictionary(lang).properties;
+  const dict = getDictionary(lang);
+  const t = dict.properties;
   const properties = getAllProperties(lang);
+
+  const jsonLd = [
+    breadcrumbJsonLd([
+      { name: siteConfig.name, path: `/${lang}` },
+      { name: dict.common.nav.properties, path: `/${lang}/properties` },
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: t.meta.title,
+      numberOfItems: properties.length,
+      itemListElement: properties.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${siteConfig.url}/${lang}/properties/${p.slug}`,
+        name: `${p.title} — ${formatPrice(p.price, lang)}`,
+      })),
+      provider: { "@id": ids.organization },
+    },
+  ];
 
   return (
     <div className="relative overflow-hidden bg-void">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }} />
       <div className="pointer-events-none absolute inset-0 bg-grain opacity-[0.05]" />
       <div
         className="pointer-events-none absolute left-1/2 top-0 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[140px]"

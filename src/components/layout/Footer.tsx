@@ -3,7 +3,7 @@ import { Linkedin, Instagram, Mail, MapPin } from "lucide-react";
 import { BridgeMark } from "@/components/ui/BridgeMark";
 import { localePath, type Locale } from "@/i18n/config";
 import type { CommonDict } from "@/i18n/dictionaries";
-import { siteConfig } from "@/lib/site";
+import { parentCompany, siteConfig } from "@/lib/site";
 
 const socials = [
   { icon: Linkedin, href: "https://www.linkedin.com/company/uycryptomonedas", label: "LinkedIn" },
@@ -60,6 +60,18 @@ export function Footer({ lang, dict }: { lang: Locale; dict: CommonDict }) {
             </Link>
             <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-ink-muted">
               {t.tagline}
+            </p>
+            <p className="mt-4 max-w-xs font-body text-xs leading-relaxed text-ink-faint">
+              {t.parentPrefix}{" "}
+              <a
+                href={parentCompany.url}
+                target="_blank"
+                rel="noopener"
+                className="font-medium text-gold-bright underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold"
+              >
+                {parentCompany.name}
+              </a>
+              . {t.parentDescription}
             </p>
             <div className="mt-6 space-y-2.5">
               <a

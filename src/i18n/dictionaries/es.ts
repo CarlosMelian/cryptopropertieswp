@@ -16,8 +16,17 @@ export const es: Dictionary = {
       "residencia fiscal Uruguay",
       "propiedades en Uruguay para extranjeros",
       "asesoramiento patrimonial cripto",
+      "UyCryptomonedas",
+      "comprar apartamento con Bitcoin",
+      "casas en venta Punta del Este",
+      "apartamentos en venta Montevideo",
     ],
     schemaDescription: "Firma de asesoramiento que conecta a inversores en criptomonedas con el mercado inmobiliario uruguayo.",
+    homeTitle: "Comprar propiedades en Uruguay con cripto | CryptoProperties Uruguay",
+    homeDescription:
+      "Compre, venda e invierta en inmuebles en Uruguay con Bitcoin, USDT y otras criptomonedas, con respaldo legal, notarial y de cumplimiento. Una empresa de UyCryptomonedas.",
+    ogTagline: "Propiedades en Uruguay para inversores cripto",
+    ogParent: "Una empresa de UyCryptomonedas",
   },
 
   common: {
@@ -41,6 +50,9 @@ export const es: Dictionary = {
     footer: {
       tagline: "El puente entre el patrimonio cripto y el mercado inmobiliario uruguayo. Legal, seguro y pensado para el inversor moderno.",
       location: "Montevideo, Uruguay",
+      parentPrefix: "Una empresa de",
+      parentDescription:
+        "UyCryptomonedas compra y vende USDT, Bitcoin y Ethereum en Uruguay, con oficinas en Montevideo, Punta del Este y Mercedes.",
       company: "Empresa",
       services: "Servicios",
       legal: "Legal",
@@ -125,6 +137,11 @@ export const es: Dictionary = {
       ],
       stats: ["Capital gestionado (USD)", "Clientes internacionales", "Operaciones estructuradas", "Países atendidos"],
       illustrative: "Cifras ilustrativas",
+      parent: {
+        eyebrow: "Nuestra empresa madre",
+        text: "CryptoProperties Uruguay forma parte de UyCryptomonedas, que compra y vende USDT, Bitcoin y Ethereum en Uruguay y cuenta con oficinas en Montevideo, Punta del Este y Mercedes.",
+        cta: "Visitar uycryptomonedas.com",
+      },
     },
     services: {
       eyebrow: "Servicios",
@@ -351,9 +368,9 @@ export const es: Dictionary = {
 
   properties: {
     meta: {
-      title: "Propiedades en venta en Uruguay",
+      title: "Propiedades en venta en Uruguay — Compra con cripto",
       description:
-        "Una selección de propiedades premium en Uruguay: villas en la costa de Punta del Este y José Ignacio, residencias en Montevideo, chacras y activos comerciales. Compras con criptomonedas acompañadas caso a caso.",
+        "Propiedades premium en venta en Uruguay: casas y apartamentos en Punta del Este, José Ignacio y Montevideo, chacras y locales. Asesoría para comprar con cripto.",
       ogDescription: "Propiedades premium seleccionadas en Punta del Este, José Ignacio y Montevideo.",
     },
     hero: {
@@ -430,6 +447,8 @@ export const es: Dictionary = {
       about: "Sobre la propiedad",
       amenities: "Características y comodidades",
       metaSuffix: "{type} en {location}.",
+      metaDescription: "{type} en venta en {location}{facts}. Precio {price}. Asesoramiento para compras con capital en criptomonedas.",
+      metaLand: "de terreno",
       relatedEyebrow: "Siga explorando",
       relatedTitle: "También puede interesarle",
       viewAll: "Ver todas las propiedades",

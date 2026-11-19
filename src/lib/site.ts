@@ -16,6 +16,18 @@ export const siteConfig = {
   whatsappNumber: (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").replace(/\D/g, ""),
 } as const;
 
+/** Parent company. Linked from the footer and home, and declared in structured data. */
+export const parentCompany = {
+  name: "UyCryptomonedas",
+  url: "https://uycryptomonedas.com",
+  /** Social profiles shown in the footer belong to the parent company. */
+  sameAs: [
+    "https://www.linkedin.com/company/uycryptomonedas",
+    "https://www.instagram.com/uycryptomonedas",
+  ],
+  offices: ["Montevideo", "Punta del Este", "Mercedes"],
+} as const;
+
 export function propertyUrl(slug: string, locale: Locale) {
   return `${siteConfig.url}/${locale}/properties/${slug}`;
 }

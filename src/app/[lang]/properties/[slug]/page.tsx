@@ -23,7 +23,8 @@ import {
 } from "@/lib/properties";
 import { propertyUrl, siteConfig } from "@/lib/site";
 import { getDictionary } from "@/i18n/dictionaries";
-import { format, isLocale, languageAlternates, localePath, localeTags } from "@/i18n/config";
+import { format, isLocale, localePath, localeTags } from "@/i18n/config";
+import { breadcrumbJsonLd, ids, jsonLdString, pageMetadata } from "@/lib/seo";
 
 type Props = PageProps<"/[lang]/properties/[slug]">;
 
@@ -39,33 +40,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const property = getPropertyBySlug(slug, lang);
   if (!property) return {};
   const t = getDictionary(lang).properties;
+  const price = formatPrice(property.price, lang);
 
-  const title = `${property.title} | ${formatPrice(property.price, lang)}`;
-  const description = `${property.shortDescription} ${format(t.detail.metaSuffix, {
+  // e.g. "Apartment for sale in Pocitos, Montevideo, Uruguay: 3 bedrooms, 3 bathrooms, 245 m². Asking price $1,180,000. ..."
+  const facts = [
+    property.bedrooms !== undefined && `${property.bedrooms} ${t.facts.bedrooms.toLowerCase()}`,
+    property.bathrooms !== undefined && `${property.bathrooms} ${t.facts.bathrooms.toLowerCase()}`,
+    property.builtArea !== undefined && formatArea(property.builtArea, lang),
+    property.builtArea === undefined && property.landArea !== undefined && `${formatArea(property.landArea, lang)} ${t.detail.metaLand}`,
+  ].filter(Boolean);
+  const description = format(t.detail.metaDescription, {
     type: t.types[property.type],
     location: formatLocation(property.location),
-  })}`;
-  const path = `/properties/${property.slug}`;
+    facts: facts.length ? `: ${facts.join(", ")}` : "",
+    price,
+  });
 
-  return {
-    title,
+  return pageMetadata({
+    lang,
+    path: `/properties/${property.slug}`,
+    title: `${property.title} — ${price}`,
     description,
-    alternates: { canonical: `/${lang}${path}`, languages: languageAlternates(path) },
-    openGraph: {
-      type: "website",
-      locale: localeTags[lang].og,
-      title: `${title} | ${siteConfig.name}`,
-      description: property.shortDescription,
-      url: `/${lang}${path}`,
-      images: [{ url: property.mainImage.src, width: 2400, height: 1600, alt: property.mainImage.alt }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description: property.shortDescription,
-      images: [property.mainImage.src],
-    },
-  };
+    image: { url: property.mainImage.src, width: 2400, height: 1600, alt: property.mainImage.alt },
+  });
 }
 
 export default async function PropertyPage({ params }: Props) {
@@ -74,7 +71,8 @@ export default async function PropertyPage({ params }: Props) {
   const property = getPropertyBySlug(slug, lang);
   if (!property) notFound();
 
-  const t = getDictionary(lang).properties;
+  const dict = getDictionary(lang);
+  const t = dict.properties;
   const images = getPropertyImages(property);
   const related = getRelatedProperties(property, lang);
   const url = propertyUrl(property.slug, lang);
@@ -86,6 +84,12 @@ export default async function PropertyPage({ params }: Props) {
     property.builtArea !== undefined && { icon: Ruler, label: t.facts.builtArea, value: formatArea(property.builtArea, lang) },
     property.landArea !== undefined && { icon: LandPlot, label: t.facts.landArea, value: formatArea(property.landArea, lang) },
   ].filter(Boolean) as { icon: typeof House; label: string; value: string }[];
+
+  const breadcrumb = breadcrumbJsonLd([
+    { name: siteConfig.name, path: `/${lang}` },
+    { name: dict.common.nav.properties, path: `/${lang}/properties` },
+    { name: property.title, path: `/${lang}/properties/${property.slug}` },
+  ]);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -101,7 +105,7 @@ export default async function PropertyPage({ params }: Props) {
       priceCurrency: "USD",
       availability:
         property.status === "sold" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
-      seller: { "@type": "RealEstateAgent", name: siteConfig.name, url: siteConfig.url },
+      seller: { "@id": ids.organization },
     },
     address: {
       "@type": "PostalAddress",
@@ -117,7 +121,7 @@ export default async function PropertyPage({ params }: Props) {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{ __html: jsonLdString([jsonLd, breadcrumb]) }}
       />
 
       <article className="relative overflow-hidden bg-void">

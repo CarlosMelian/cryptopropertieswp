@@ -16,8 +16,17 @@ export const pt: Dictionary = {
       "residência fiscal Uruguai",
       "imóveis no Uruguai para estrangeiros",
       "assessoria patrimonial cripto",
+      "UyCryptomonedas",
+      "comprar apartamento com Bitcoin",
+      "casas à venda Punta del Este",
+      "apartamentos à venda Montevidéu",
     ],
     schemaDescription: "Empresa de assessoria que conecta investidores em criptomoedas ao mercado imobiliário uruguaio.",
+    homeTitle: "Comprar imóveis no Uruguai com cripto | CryptoProperties Uruguay",
+    homeDescription:
+      "Compre, venda e invista em imóveis no Uruguai com Bitcoin, USDT e outras criptomoedas, com suporte jurídico, notarial e de compliance. Uma empresa da UyCryptomonedas.",
+    ogTagline: "Imóveis no Uruguai para investidores cripto",
+    ogParent: "Uma empresa da UyCryptomonedas",
   },
 
   common: {
@@ -41,6 +50,9 @@ export const pt: Dictionary = {
     footer: {
       tagline: "A ponte entre o patrimônio cripto e o mercado imobiliário uruguaio. Legal, segura e feita para o investidor moderno.",
       location: "Montevidéu, Uruguai",
+      parentPrefix: "Uma empresa da",
+      parentDescription:
+        "A UyCryptomonedas compra e vende USDT, Bitcoin e Ethereum no Uruguai, com escritórios em Montevidéu, Punta del Este e Mercedes.",
       company: "Empresa",
       services: "Serviços",
       legal: "Legal",
@@ -125,6 +137,11 @@ export const pt: Dictionary = {
       ],
       stats: ["Capital intermediado (USD)", "Clientes internacionais", "Operações estruturadas", "Países atendidos"],
       illustrative: "Números ilustrativos",
+      parent: {
+        eyebrow: "Nossa empresa controladora",
+        text: "A CryptoProperties Uruguay faz parte da UyCryptomonedas, que compra e vende USDT, Bitcoin e Ethereum no Uruguai e tem escritórios em Montevidéu, Punta del Este e Mercedes.",
+        cta: "Visitar uycryptomonedas.com",
+      },
     },
     services: {
       eyebrow: "Serviços",
@@ -351,9 +368,9 @@ export const pt: Dictionary = {
 
   properties: {
     meta: {
-      title: "Imóveis à venda no Uruguai",
+      title: "Imóveis à venda no Uruguai — Compra com cripto",
       description:
-        "Uma seleção de imóveis premium no Uruguai: casas no litoral de Punta del Este e José Ignacio, residências em Montevidéu, chácaras e ativos comerciais. Compras com criptomoedas orientadas caso a caso.",
+        "Imóveis premium à venda no Uruguai: casas e apartamentos em Punta del Este, José Ignacio e Montevidéu, chácaras e comerciais. Assessoria para comprar com cripto.",
       ogDescription: "Imóveis premium selecionados em Punta del Este, José Ignacio e Montevidéu.",
     },
     hero: {
@@ -430,6 +447,8 @@ export const pt: Dictionary = {
       about: "Sobre o imóvel",
       amenities: "Características e comodidades",
       metaSuffix: "{type} em {location}.",
+      metaDescription: "{type} à venda em {location}{facts}. Preço {price}. Assessoria para compras com capital em criptomoedas.",
+      metaLand: "de terreno",
       relatedEyebrow: "Continue explorando",
       relatedTitle: "Você também pode considerar",
       viewAll: "Ver todos os imóveis",
@@ -633,7 +652,7 @@ export const pt: Dictionary = {
     },
     risk: {
       title: "Aviso de riscos",
-      description: "Principais riscos de converter ativos digitais em imóveis no Uruguai.",
+      description: "Principais riscos de converter ativos digitais em imóveis no Uruguai: mercado, liquidez, regulação e impostos.",
       lastUpdated: "junho de 2026",
       sections: [
         {

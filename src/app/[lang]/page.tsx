@@ -10,12 +10,15 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { Education } from "@/components/sections/Education";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { getDictionary } from "@/i18n/dictionaries";
-import { isLocale, languageAlternates } from "@/i18n/config";
-import { contactLink } from "@/lib/site";
+import { isLocale } from "@/i18n/config";
+import { contactLink, parentCompany } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
-  return { alternates: { canonical: `/${lang}`, languages: languageAlternates() } };
+  if (!isLocale(lang)) return {};
+  const { meta } = getDictionary(lang);
+  return pageMetadata({ lang, path: "", title: meta.homeTitle, description: meta.homeDescription, absoluteTitle: true });
 }
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
@@ -28,7 +31,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
   return (
     <>
       <Hero t={home.hero} consultationHref={consultationHref} servicesHref={contactLink(wa.services)} />
-      <TrustCredibility t={home.trust} />
+      <TrustCredibility t={home.trust} parentUrl={parentCompany.url} />
       <Services t={home.services} wa={wa} />
       <WhyUruguay t={home.whyUruguay} />
       <HowItWorks t={home.process} />

@@ -4,8 +4,9 @@ import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+import { ArrowUpRight } from "lucide-react";
 
-export function TrustCredibility({ t }: { t: HomeDict["trust"] }) {
+export function TrustCredibility({ t, parentUrl }: { t: HomeDict["trust"]; parentUrl: string }) {
   const trustItems = t.items.map((item, i) => ({ ...item, icon: trustIcons[i] }));
   const statItems = statValues.map((s, i) => ({ ...s, label: t.stats[i] }));
   return (
@@ -61,6 +62,24 @@ export function TrustCredibility({ t }: { t: HomeDict["trust"] }) {
           <p className="mt-3 text-center font-mono text-[0.65rem] uppercase tracking-widest2 text-ink-faint">
             {t.illustrative}
           </p>
+        </Reveal>
+
+        <Reveal delay={0.1} className="mt-12">
+          <div className="flex flex-col gap-6 rounded-3xl border border-gold/20 bg-gold/[0.04] px-7 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+            <div className="max-w-3xl">
+              <p className="eyebrow">{t.parent.eyebrow}</p>
+              <p className="mt-3 font-body text-[0.95rem] leading-relaxed text-ink-muted">{t.parent.text}</p>
+            </div>
+            <a
+              href={parentUrl}
+              target="_blank"
+              rel="noopener"
+              className="group inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-gold/40 px-5 py-2.5 font-body text-sm text-gold-bright transition-colors hover:bg-gold/10 sm:self-auto"
+            >
+              {t.parent.cta}
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+            </a>
+          </div>
         </Reveal>
       </div>
     </section>

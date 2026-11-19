@@ -5,8 +5,9 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { getDictionary } from "@/i18n/dictionaries";
-import { isLocale, languageAlternates, localeTags, locales } from "@/i18n/config";
-import { siteConfig } from "@/lib/site";
+import { isLocale, localeTags, locales } from "@/i18n/config";
+import { parentCompany, siteConfig } from "@/lib/site";
+import { jsonLdString, pageMetadata, siteJsonLd } from "@/lib/seo";
 import "../globals.css";
 
 const fraunces = Fraunces({
@@ -43,27 +44,23 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   const { meta } = getDictionary(lang);
 
   return {
+    // Defaults for every page; each page overrides title/description/openGraph via pageMetadata().
+    ...pageMetadata({ lang, path: "", title: meta.title, description: meta.description, absoluteTitle: true }),
     metadataBase: new URL(siteConfig.url),
     title: { default: meta.title, template: `%s | ${siteConfig.name}` },
-    description: meta.description,
+    applicationName: siteConfig.name,
     keywords: meta.keywords,
-    authors: [{ name: siteConfig.name }],
-    alternates: { canonical: `/${lang}`, languages: languageAlternates() },
-    openGraph: {
-      type: "website",
-      locale: localeTags[lang].og,
-      alternateLocale: locales.filter((l) => l !== lang).map((l) => localeTags[l].og),
-      url: `/${lang}`,
-      siteName: siteConfig.name,
-      title: meta.title,
-      description: meta.ogDescription,
+    authors: [{ name: siteConfig.name, url: siteConfig.url }],
+    creator: siteConfig.name,
+    publisher: parentCompany.name,
+    category: "Real estate",
+    icons: { icon: "/icon.svg", shortcut: "/icon.svg", apple: "/icon.svg" },
+    formatDetection: { telephone: false, email: false, address: false },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
     },
-    twitter: {
-      card: "summary_large_image",
-      title: siteConfig.name,
-      description: meta.twitterDescription,
-    },
-    robots: { index: true, follow: true },
   };
 }
 
@@ -77,17 +74,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       <body className="font-body antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "RealEstateAgent",
-              name: siteConfig.name,
-              description: dict.meta.schemaDescription,
-              areaServed: "Uruguay",
-              url: `${siteConfig.url}/${lang}`,
-              availableLanguage: ["English", "Spanish", "Portuguese"],
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: jsonLdString(siteJsonLd(lang)) }}
         />
         <I18nProvider value={{ lang, common: dict.common, properties: dict.properties }}>
           <Navbar />
