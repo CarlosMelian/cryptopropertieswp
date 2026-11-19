@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { ArrowUpRight, Lock } from "lucide-react";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { Reveal } from "@/components/ui/Reveal";
@@ -8,22 +9,30 @@ import { BridgeMark } from "@/components/ui/BridgeMark";
 import { PropertyCatalog, PropertyCatalogFromUrl } from "@/components/properties/PropertyCatalog";
 import { getAllProperties } from "@/lib/properties";
 import { siteConfig } from "@/lib/site";
+import { getDictionary } from "@/i18n/dictionaries";
+import { isLocale, languageAlternates } from "@/i18n/config";
 
-export const metadata: Metadata = {
-  title: "Properties For Sale In Uruguay",
-  description:
-    "A curated portfolio of premium Uruguayan real estate: coastal villas in Punta del Este and José Ignacio, Montevideo residences, countryside chacras and commercial assets. Acquisitions with cryptocurrency guided case by case.",
-  alternates: { canonical: "/properties" },
-  openGraph: {
-    title: "Properties For Sale In Uruguay | CryptoProperties Uruguay",
-    description:
-      "Curated premium real estate across Punta del Este, José Ignacio and Montevideo.",
-    url: "/properties",
-  },
-};
+export async function generateMetadata({ params }: PageProps<"/[lang]/properties">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const { meta } = getDictionary(lang).properties;
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: { canonical: `/${lang}/properties`, languages: languageAlternates("/properties") },
+    openGraph: {
+      title: `${meta.title} | ${siteConfig.name}`,
+      description: meta.ogDescription,
+      url: `/${lang}/properties`,
+    },
+  };
+}
 
-export default function PropertiesPage() {
-  const properties = getAllProperties();
+export default async function PropertiesPage({ params }: PageProps<"/[lang]/properties">) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const t = getDictionary(lang).properties;
+  const properties = getAllProperties(lang);
 
   return (
     <div className="relative overflow-hidden bg-void">
@@ -37,20 +46,19 @@ export default function PropertiesPage() {
       <section className="relative px-6 pb-14 pt-36 sm:px-10 sm:pt-44 lg:px-16">
         <div className="mx-auto max-w-3xl text-center">
           <Reveal>
-            <SectionEyebrow align="center">Property Portfolio</SectionEyebrow>
+            <SectionEyebrow align="center">{t.hero.eyebrow}</SectionEyebrow>
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="mt-8 text-balance font-display text-4xl font-medium leading-[1.1] text-ink sm:text-5xl lg:text-6xl">
-              Exceptional Properties{" "}
+              {t.hero.titleLead}{" "}
               <span className="bg-gradient-to-r from-gold-bright to-gold bg-clip-text italic text-transparent">
-                Across Uruguay
+                {t.hero.titleHighlight}
               </span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mx-auto mt-6 max-w-xl text-balance font-body text-base leading-relaxed text-ink-muted sm:text-lg">
-              A curated selection of coastal villas, city residences, countryside estates and
-              commercial assets, each reviewed by our team for title clarity and long-term value.
+              {t.hero.subtitle}
             </p>
           </Reveal>
         </div>
@@ -75,23 +83,19 @@ export default function PropertiesPage() {
                 <div className="inline-flex items-center gap-2.5 rounded-full border border-gold/25 bg-void/40 px-4 py-1.5">
                   <Lock className="h-3.5 w-3.5 text-gold" aria-hidden />
                   <span className="font-mono text-[0.625rem] uppercase tracking-widest2 text-gold">
-                    Private Investor Network
+                    {t.offMarket.badge}
                   </span>
                 </div>
                 <h2 className="mt-6 text-balance font-display text-3xl leading-tight text-ink sm:text-4xl">
-                  Looking for something not listed here?
+                  {t.offMarket.title}
                 </h2>
-                <p className="mt-4 font-body text-base leading-relaxed text-ink-muted">
-                  Many of the most interesting opportunities in Uruguay never reach the open
-                  market. Tell us what you are looking for and we will share relevant
-                  off-market properties following an initial consultation.
-                </p>
+                <p className="mt-4 font-body text-base leading-relaxed text-ink-muted">{t.offMarket.text}</p>
               </div>
               <a
-                href={`mailto:${siteConfig.email}?subject=${encodeURIComponent("Off-market property search")}`}
+                href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(t.offMarket.emailSubject)}`}
                 className={buttonVariants({ size: "lg", className: "self-start lg:self-auto" })}
               >
-                Request Off-Market Access
+                {t.offMarket.cta}
                 <ArrowUpRight className="h-4 w-4 text-void transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
             </div>

@@ -49,6 +49,39 @@ export interface Property {
   status: PropertyStatus;
 }
 
+/* ------------------------- Localized source data -------------------------- */
+
+/** One value per supported language (en, es, pt). */
+export interface Localized<T = string> {
+  en: T;
+  es: T;
+  pt: T;
+}
+
+export interface PropertyImageRecord {
+  src: string;
+  alt: Localized;
+}
+
+/**
+ * How a listing is stored in src/lib/properties.ts: every visitor-facing text
+ * carries all three languages. Pages receive a resolved `Property` instead.
+ */
+export interface PropertyRecord
+  extends Omit<
+    Property,
+    "title" | "location" | "mainImage" | "gallery" | "shortDescription" | "fullDescription" | "amenities"
+  > {
+  title: Localized;
+  /** Place names are proper nouns and stay the same in every language. */
+  location: Omit<PropertyLocation, "country">;
+  mainImage: PropertyImageRecord;
+  gallery: PropertyImageRecord[];
+  shortDescription: Localized;
+  fullDescription: Localized<string[]>;
+  amenities: Localized<string[]>;
+}
+
 export type PriceSort = "featured" | "price-asc" | "price-desc";
 
 export interface PropertyFilters {

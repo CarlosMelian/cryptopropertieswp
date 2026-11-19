@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Images } from "lucide-react";
 import type { PropertyImage } from "@/types";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/I18nProvider";
+import { format } from "@/i18n/config";
 import { PropertyLightbox } from "./PropertyLightbox";
 
 interface PropertyGalleryProps {
@@ -33,11 +35,12 @@ function Tile({
   overlay?: React.ReactNode;
   style?: React.CSSProperties;
 }) {
+  const { properties } = useI18n();
   return (
     <button
       type="button"
       onClick={() => onOpen(index)}
-      aria-label={`Open photo ${index + 1}: ${image.alt}`}
+      aria-label={format(properties.gallery.openPhoto, { n: index + 1, alt: image.alt })}
       className={cn("group relative overflow-hidden bg-graphite", className)}
       style={style}
     >
@@ -57,6 +60,7 @@ function Tile({
 
 export function PropertyGallery({ images, title }: PropertyGalleryProps) {
   const [active, setActive] = useState<number | null>(null);
+  const { properties } = useI18n();
   const [main, ...rest] = images;
   const thumbs = rest.slice(0, MAX_TILES - 1);
   const hidden = images.length - 1 - thumbs.length;
@@ -68,7 +72,7 @@ export function PropertyGallery({ images, title }: PropertyGalleryProps) {
       className="absolute bottom-4 right-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/15 bg-void/70 px-4 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-ink backdrop-blur-md transition-colors hover:border-gold/50 hover:text-gold-bright"
     >
       <Images className="h-3.5 w-3.5" aria-hidden />
-      View all {images.length} photos
+      {format(properties.gallery.viewAll, { count: images.length })}
     </button>
   );
 

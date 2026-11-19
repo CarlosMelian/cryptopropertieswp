@@ -6,18 +6,23 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BridgeMark } from "@/components/ui/BridgeMark";
 import { Button } from "@/components/ui/Button";
-
-const navLinks = [
-  { label: "Services", href: "/#services" },
-  { label: "Why Uruguay", href: "/#why-uruguay" },
-  { label: "Process", href: "/#process" },
-  { label: "Insights", href: "/#insights" },
-  { label: "Properties", href: "/properties" },
-];
+import { useI18n } from "@/i18n/I18nProvider";
+import { localePath } from "@/i18n/config";
+import { LanguageDropdown, LanguageSegmented } from "./LanguageSwitcher";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { lang, common } = useI18n();
+  const t = common.nav;
+
+  const navLinks = [
+    { label: t.services, href: localePath(lang, "/#services") },
+    { label: t.whyUruguay, href: localePath(lang, "/#why-uruguay") },
+    { label: t.process, href: localePath(lang, "/#process") },
+    { label: t.insights, href: localePath(lang, "/#insights") },
+    { label: t.properties, href: localePath(lang, "/properties") },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -38,7 +43,7 @@ export function Navbar() {
         }`}
         style={{ height: scrolled ? "60px" : "72px" }}
       >
-        <Link href="/" className="flex items-center gap-2.5 text-ink">
+        <Link href={localePath(lang)} className="flex items-center gap-2.5 text-ink">
           <BridgeMark className="h-6 w-6 text-gold sm:h-7 sm:w-7" />
           <span className="font-display text-[0.95rem] leading-none tracking-wide sm:text-base">
             CryptoProperties
@@ -48,26 +53,28 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-7 lg:flex xl:gap-8">
           {navLinks.map((link) => (
             <Link
-              key={link.label}
+              key={link.href}
               href={link.href}
-              className="font-body text-sm text-ink-muted transition-colors hover:text-gold-bright"
+              className="whitespace-nowrap font-body text-sm text-ink-muted transition-colors hover:text-gold-bright"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-3 lg:flex">
+          <LanguageDropdown />
           <Button size="md" className="text-[0.8rem]">
-            Private Consultation
+            {t.consultation}
           </Button>
         </div>
 
         <button
-          aria-label="Toggle menu"
+          aria-label={t.toggleMenu}
+          aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
           className="text-ink lg:hidden"
         >
@@ -87,7 +94,7 @@ export function Navbar() {
             <nav className="flex flex-col gap-5">
               {navLinks.map((link) => (
                 <Link
-                  key={link.label}
+                  key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
                   className="font-body text-base text-ink-muted transition-colors hover:text-gold-bright"
@@ -95,8 +102,11 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <div className="mt-1 border-t border-graphite-border pt-5">
+                <LanguageSegmented onSelect={() => setOpen(false)} />
+              </div>
               <Button size="md" className="mt-2 w-full">
-                Private Consultation
+                {t.consultation}
               </Button>
             </nav>
           </motion.div>

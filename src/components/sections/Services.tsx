@@ -1,19 +1,21 @@
 import { ArrowRight } from "lucide-react";
-import { serviceItems } from "@/lib/data";
+import { serviceIcons } from "@/lib/data";
+import type { HomeDict } from "@/i18n/dictionaries";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Reveal } from "@/components/ui/Reveal";
 
-export function Services() {
+export function Services({ t }: { t: HomeDict["services"] }) {
+  const serviceItems = t.items.map((item, i) => ({ ...item, icon: serviceIcons[i] }));
   const [featured, ...rest] = serviceItems;
 
   return (
     <section id="services" className="relative bg-void py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <SectionEyebrow align="center">Services</SectionEyebrow>
+          <SectionEyebrow align="center">{t.eyebrow}</SectionEyebrow>
           <h2 className="mt-5 font-display text-balance text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-            A full advisory practice, built around one transaction type
+            {t.title}
           </h2>
         </Reveal>
 
@@ -55,7 +57,7 @@ export function Services() {
                   {service.description}
                 </p>
                 <span className="mt-5 flex items-center gap-1.5 font-body text-sm text-gold-bright opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  Learn more
+                  {t.learnMore}
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </GlassCard>

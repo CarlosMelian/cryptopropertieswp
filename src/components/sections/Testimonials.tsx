@@ -1,17 +1,18 @@
 import { Quote } from "lucide-react";
-import { testimonials } from "@/lib/data";
+import type { HomeDict } from "@/i18n/dictionaries";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Reveal } from "@/components/ui/Reveal";
 
-export function Testimonials() {
+export function Testimonials({ t }: { t: HomeDict["testimonials"] }) {
+  const testimonials = t.items;
   return (
     <section className="relative bg-void py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <SectionEyebrow align="center">Client Perspectives</SectionEyebrow>
+          <SectionEyebrow align="center">{t.eyebrow}</SectionEyebrow>
           <h2 className="mt-5 font-display text-balance text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-            Trusted across four continents
+            {t.title}
           </h2>
         </Reveal>
 

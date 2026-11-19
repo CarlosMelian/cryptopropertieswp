@@ -5,12 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { SearchX } from "lucide-react";
 import type { PriceSort, Property, PropertyFilters, PropertyType } from "@/types";
-import {
-  defaultFilters,
-  filterProperties,
-  getAvailableTypes,
-  propertyTypeLabels,
-} from "@/lib/properties";
+import { defaultFilters, filterProperties, getAvailableTypes, propertyTypes } from "@/lib/properties";
+import { useI18n } from "@/i18n/I18nProvider";
 import { PropertyCard } from "./PropertyCard";
 import { PropertyFiltersBar } from "./PropertyFiltersBar";
 
@@ -29,7 +25,7 @@ export function filtersFromParams(params: URLSearchParams): PropertyFilters {
   const sort = params.get("sort");
   return {
     query: params.get("q") ?? "",
-    type: type && type in propertyTypeLabels ? (type as PropertyType) : "all",
+    type: type && propertyTypes.includes(type as PropertyType) ? (type as PropertyType) : "all",
     minPrice: parsePrice(params.get("min")),
     maxPrice: parsePrice(params.get("max")),
     sort: sort && sortValues.includes(sort as PriceSort) ? (sort as PriceSort) : "featured",
@@ -65,9 +61,10 @@ interface PropertyCatalogProps {
 }
 
 export function PropertyCatalog({ properties, initialFilters = defaultFilters }: PropertyCatalogProps) {
+  const { properties: t } = useI18n();
   const [filters, setFilters] = useState<PropertyFilters>(initialFilters);
   const types = useMemo(() => getAvailableTypes(properties), [properties]);
-  const results = useMemo(() => filterProperties(properties, filters), [properties, filters]);
+  const results = useMemo(() => filterProperties(properties, filters, t.types), [properties, filters, t.types]);
 
   const update = useCallback((next: PropertyFilters) => {
     setFilters(next);
@@ -90,11 +87,10 @@ export function PropertyCatalog({ properties, initialFilters = defaultFilters }:
       <div className="mt-10 flex items-baseline justify-between gap-4 border-b border-graphite-border pb-5">
         <p className="font-body text-sm text-ink-muted" aria-live="polite">
           <span className="font-display text-lg text-ink">{results.length}</span>{" "}
-          {results.length === 1 ? "property" : "properties"}
-          {dirty ? " match your criteria" : " in our portfolio"}
+          {results.length === 1 ? t.results.one : t.results.other} {dirty ? t.results.match : t.results.inPortfolio}
         </p>
         <span className="hidden font-mono text-[0.625rem] uppercase tracking-widest2 text-ink-faint sm:block">
-          Prices in USD
+          {t.results.pricesInUsd}
         </span>
       </div>
 
@@ -118,17 +114,16 @@ export function PropertyCatalog({ properties, initialFilters = defaultFilters }:
       ) : (
         <div className="mt-10 flex flex-col items-center rounded-2xl border border-dashed border-graphite-border px-6 py-20 text-center">
           <SearchX className="h-8 w-8 text-gold/70" aria-hidden />
-          <h3 className="mt-5 font-display text-2xl text-ink">No properties match these filters</h3>
+          <h3 className="mt-5 font-display text-2xl text-ink">{t.empty.title}</h3>
           <p className="mt-3 max-w-md font-body text-sm leading-relaxed text-ink-muted">
-            Try widening your price range or searching a different area. Our team also has access to
-            off-market opportunities not listed here.
+            {t.empty.text}
           </p>
           <button
             type="button"
             onClick={() => update(defaultFilters)}
             className="mt-7 rounded-full border border-gold/40 px-6 py-2.5 font-body text-sm text-gold-bright transition-colors hover:bg-gold/10"
           >
-            Clear all filters
+            {t.filters.clearAll}
           </button>
         </div>
       )}

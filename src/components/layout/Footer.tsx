@@ -1,71 +1,78 @@
 import Link from "next/link";
 import { Linkedin, Instagram, Twitter, Mail, MapPin } from "lucide-react";
 import { BridgeMark } from "@/components/ui/BridgeMark";
-
-const columns = [
-  {
-    title: "Company",
-    links: [
-      { label: "About Us", href: "/#trust" },
-      { label: "Why Uruguay", href: "/#why-uruguay" },
-      { label: "Our Process", href: "/#process" },
-      { label: "Insights", href: "/#insights" },
-    ],
-  },
-  {
-    title: "Services",
-    links: [
-      { label: "Buy With Crypto", href: "/#services" },
-      { label: "Sell To Crypto Investors", href: "/#services" },
-      { label: "Crypto Wealth Advisory", href: "/#services" },
-      { label: "Residency & Relocation", href: "/#services" },
-      { label: "Private Investor Network", href: "/#services" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "/legal/privacy" },
-      { label: "Terms of Service", href: "/legal/terms" },
-      { label: "Compliance Disclosures", href: "/legal/compliance" },
-      { label: "Risk Disclosure", href: "/legal/risk" },
-    ],
-  },
-];
+import { localePath, type Locale } from "@/i18n/config";
+import type { CommonDict } from "@/i18n/dictionaries";
+import { siteConfig } from "@/lib/site";
 
 const socials = [
-  { icon: Linkedin, href: "/#", label: "LinkedIn" },
-  { icon: Instagram, href: "/#", label: "Instagram" },
-  { icon: Twitter, href: "/#", label: "Twitter" },
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Twitter, href: "#", label: "Twitter" },
 ];
 
-export function Footer() {
+export function Footer({ lang, dict }: { lang: Locale; dict: CommonDict }) {
+  const t = dict.footer;
+  const l = t.links;
+  const p = (path: string) => localePath(lang, path);
+
+  const columns = [
+    {
+      title: t.company,
+      links: [
+        { label: l.about, href: p("/#trust") },
+        { label: l.whyUruguay, href: p("/#why-uruguay") },
+        { label: l.process, href: p("/#process") },
+        { label: l.insights, href: p("/#insights") },
+        { label: l.properties, href: p("/properties") },
+      ],
+    },
+    {
+      title: t.services,
+      links: [
+        { label: l.buyWithCrypto, href: p("/#services") },
+        { label: l.sellToCrypto, href: p("/#services") },
+        { label: l.wealthAdvisory, href: p("/#services") },
+        { label: l.residency, href: p("/#services") },
+        { label: l.network, href: p("/#services") },
+      ],
+    },
+    {
+      title: t.legal,
+      links: [
+        { label: l.privacy, href: p("/legal/privacy") },
+        { label: l.terms, href: p("/legal/terms") },
+        { label: l.compliance, href: p("/legal/compliance") },
+        { label: l.risk, href: p("/legal/risk") },
+      ],
+    },
+  ];
+
   return (
     <footer id="contact" className="relative border-t border-graphite-border bg-void">
       <div className="mx-auto max-w-8xl px-6 py-16 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Link href="/" className="flex items-center gap-2.5 text-ink">
+            <Link href={p("/")} className="flex items-center gap-2.5 text-ink">
               <BridgeMark className="h-7 w-7 text-gold" />
               <span className="font-display text-base tracking-wide">
                 CryptoProperties Uruguay
               </span>
             </Link>
             <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-ink-muted">
-              The bridge between crypto wealth and Uruguayan real estate.
-              Legal, secure, and built for the modern investor.
+              {t.tagline}
             </p>
             <div className="mt-6 space-y-2.5">
               <a
-                href="mailto:contact@cryptoproperties.uy"
+                href={`mailto:${siteConfig.email}`}
                 className="flex items-center gap-2.5 font-body text-sm text-ink-muted transition-colors hover:text-gold-bright"
               >
                 <Mail className="h-4 w-4 text-gold" />
-                contact@cryptoproperties.uy
+                {siteConfig.email}
               </a>
               <div className="flex items-center gap-2.5 font-body text-sm text-ink-muted">
                 <MapPin className="h-4 w-4 text-gold" />
-                Montevideo, Uruguay
+                {t.location}
               </div>
             </div>
             <div className="mt-6 flex gap-3">
@@ -103,13 +110,9 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-graphite-border pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-body text-xs text-ink-faint">
-            © {new Date().getFullYear()} CryptoProperties Uruguay. All rights reserved.
+            © {new Date().getFullYear()} CryptoProperties Uruguay. {t.rights}
           </p>
-          <p className="max-w-xl font-body text-xs text-ink-faint">
-            CryptoProperties Uruguay is an advisory firm and does not provide
-            investment, legal, or tax advice. All transactions are subject to
-            independent legal, notarial, and tax review.
-          </p>
+          <p className="max-w-xl font-body text-xs text-ink-faint">{t.disclaimer}</p>
         </div>
       </div>
     </footer>

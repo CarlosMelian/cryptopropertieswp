@@ -1,16 +1,17 @@
-import { processSteps } from "@/lib/data";
+import type { HomeDict } from "@/i18n/dictionaries";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { BridgeLine } from "@/components/ui/BridgeLine";
 
-export function HowItWorks() {
+export function HowItWorks({ t }: { t: HomeDict["process"] }) {
+  const processSteps = t.steps.map((step, i) => ({ ...step, index: String(i + 1).padStart(2, "0") }));
   return (
     <section id="process" className="relative bg-void py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <SectionEyebrow align="center">How It Works</SectionEyebrow>
+          <SectionEyebrow align="center">{t.eyebrow}</SectionEyebrow>
           <h2 className="mt-5 font-display text-balance text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-            From private consultation to recorded title
+            {t.title}
           </h2>
         </Reveal>
 

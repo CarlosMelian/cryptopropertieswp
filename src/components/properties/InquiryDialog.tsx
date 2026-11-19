@@ -10,6 +10,8 @@ import { buttonVariants } from "@/components/ui/buttonVariants";
 import { formatPrice } from "@/lib/properties";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/I18nProvider";
+import { format, localePath } from "@/i18n/config";
 
 export interface InquiryProperty {
   slug: string;
@@ -26,33 +28,7 @@ interface InquiryDialogProps {
   onClose: () => void;
 }
 
-const copy: Record<InquiryIntent, { eyebrow: string; heading: string; message: string; submit: string }> = {
-  information: {
-    eyebrow: "Request Information",
-    heading: "Interested in this property?",
-    message: "",
-    submit: "Send Request",
-  },
-  crypto: {
-    eyebrow: "Crypto Purchase Inquiry",
-    heading: "Discuss a crypto purchase",
-    message:
-      "I would like to understand how I could acquire this property using cryptocurrency.",
-    submit: "Send Inquiry",
-  },
-};
-
-const methods: { value: ContactMethod; label: string }[] = [
-  { value: "email", label: "Email" },
-  { value: "phone", label: "Phone call" },
-  { value: "whatsapp", label: "WhatsApp" },
-];
-
-const methodPhrase: Record<ContactMethod, string> = {
-  email: "by email",
-  phone: "by phone",
-  whatsapp: "on WhatsApp",
-};
+const methods: ContactMethod[] = ["email", "phone", "whatsapp"];
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -67,7 +43,9 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
   const [error, setError] = useState<string | null>(null);
   const [submittedName, setSubmittedName] = useState("");
   const [method, setMethod] = useState<ContactMethod>(defaultContactMethod);
-  const c = copy[intent];
+  const { lang, properties } = useI18n();
+  const t = properties.inquiry;
+  const c = t[intent];
 
   useModalBehavior(open, onClose);
 
@@ -77,8 +55,8 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
     setStatus("idle");
     setError(null);
     setMethod(defaultContactMethod);
-    const t = window.setTimeout(() => firstFieldRef.current?.focus(), 80);
-    return () => window.clearTimeout(t);
+    const timer = window.setTimeout(() => firstFieldRef.current?.focus(), 80);
+    return () => window.clearTimeout(timer);
   }, [open, defaultContactMethod]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -92,6 +70,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
       preferredContact: method,
       message: String(data.get("message") ?? "").trim(),
       intent,
+      locale: lang,
       propertySlug: property.slug,
       website: String(data.get("website") ?? ""), // honeypot
     };
@@ -106,20 +85,21 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
       });
       if (!res.ok) {
         const body = (await res.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(body?.error ?? "We could not send your request.");
+        const code = body?.error as keyof typeof t.errors | undefined;
+        throw new Error(code && code in t.errors ? t.errors[code] : t.errors.generic);
       }
       setSubmittedName(payload.fullName.split(/\s+/)[0] ?? "");
       setStatus("success");
       form.reset();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "We could not send your request.");
+      setError(err instanceof Error && err.message ? err.message : t.errors.generic);
       setStatus("error");
     }
   }
 
   const mailtoFallback = `mailto:${siteConfig.email}?subject=${encodeURIComponent(
     `${c.eyebrow}: ${property.title}`
-  )}&body=${encodeURIComponent(`Property: ${property.title}\n${property.url}\n\n`)}`;
+  )}&body=${encodeURIComponent(`${property.title}\n${property.url}\n\n`)}`;
 
   return (
     <AnimatePresence>
@@ -133,7 +113,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
         >
           <button
             type="button"
-            aria-label="Close"
+            aria-label={t.close}
             tabIndex={-1}
             onClick={onClose}
             className="absolute inset-0 cursor-default bg-void/80 backdrop-blur-sm"
@@ -155,16 +135,16 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
               <div className="min-w-0">
                 <p className="eyebrow">{c.eyebrow}</p>
                 <h2 id={`${ids}-title`} className="mt-3 font-display text-2xl leading-tight text-ink">
-                  {status === "success" ? "Request received" : c.heading}
+                  {status === "success" ? t.received : c.heading}
                 </h2>
                 <p className="mt-2 truncate font-body text-sm text-ink-muted">
-                  {property.title} · <span className="text-ink">{formatPrice(property.price)}</span>
+                  {property.title} · <span className="text-ink">{formatPrice(property.price, lang)}</span>
                 </p>
               </div>
               <button
                 type="button"
                 onClick={onClose}
-                aria-label="Close"
+                aria-label={t.close}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 text-ink-muted transition-colors hover:border-gold/40 hover:text-gold-bright"
               >
                 <X className="h-4 w-4" />
@@ -175,18 +155,19 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
               <div className="px-6 py-12 text-center sm:px-8">
                 <CircleCheck className="mx-auto h-12 w-12 text-gold" strokeWidth={1.25} aria-hidden />
                 <h3 className="mt-6 font-display text-2xl text-ink">
-                  Thank you{submittedName ? `, ${submittedName}` : ""}.
+                  {t.thankYou}
+                  {submittedName ? `, ${submittedName}` : ""}.
                 </h3>
                 <p className="mx-auto mt-3 max-w-sm font-body text-sm leading-relaxed text-ink-muted">
-                  A CryptoProperties Uruguay advisor will contact you {methodPhrase[method]} regarding{" "}
+                  {format(t.successText, { method: t.methodPhrases[method] })}{" "}
                   <span className="text-ink">{property.title}</span>.
                 </p>
                 <button type="button" onClick={onClose} className={buttonVariants({ variant: "secondary", className: "mt-8" })}>
-                  Close
+                  {t.close}
                 </button>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="space-y-5 px-6 py-7 sm:px-8" noValidate={false}>
+              <form onSubmit={onSubmit} className="space-y-5 px-6 py-7 sm:px-8">
                 {/* Honeypot: hidden from people, tempting for bots */}
                 <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden>
                   <label htmlFor={`${ids}-website`}>Website</label>
@@ -195,7 +176,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
 
                 <div>
                   <label htmlFor={`${ids}-name`} className={label}>
-                    Full name
+                    {t.fullName}
                   </label>
                   <input
                     ref={firstFieldRef}
@@ -212,7 +193,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label htmlFor={`${ids}-email`} className={label}>
-                      Email
+                      {t.email}
                     </label>
                     <input
                       id={`${ids}-email`}
@@ -226,7 +207,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                   </div>
                   <div>
                     <label htmlFor={`${ids}-phone`} className={label}>
-                      Phone / WhatsApp
+                      {t.phone}
                     </label>
                     <input
                       id={`${ids}-phone`}
@@ -236,8 +217,8 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                       minLength={6}
                       maxLength={30}
                       pattern="[0-9+()\-.\s]{6,30}"
-                      title="Include your country code, e.g. +1 555 123 4567"
-                      placeholder="+1 555 123 4567"
+                      title={t.phoneHint}
+                      placeholder={t.phonePlaceholder}
                       autoComplete="tel"
                       className={input}
                     />
@@ -245,14 +226,14 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                 </div>
 
                 <fieldset>
-                  <legend className={label}>Preferred contact method</legend>
+                  <legend className={label}>{t.preferredMethod}</legend>
                   <div className="grid grid-cols-3 gap-2">
                     {methods.map((m) => (
                       <label
-                        key={m.value}
+                        key={m}
                         className={cn(
                           "flex h-11 cursor-pointer items-center justify-center rounded-xl border px-2 text-center font-body text-sm transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-gold",
-                          method === m.value
+                          method === m
                             ? "border-gold/60 bg-gold/10 text-gold-bright"
                             : "border-graphite-border bg-void/40 text-ink-muted hover:border-white/15"
                         )}
@@ -260,12 +241,12 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                         <input
                           type="radio"
                           name="preferredContact"
-                          value={m.value}
-                          checked={method === m.value}
-                          onChange={() => setMethod(m.value)}
+                          value={m}
+                          checked={method === m}
+                          onChange={() => setMethod(m)}
                           className="sr-only"
                         />
-                        {m.label}
+                        {t.methods[m]}
                       </label>
                     ))}
                   </div>
@@ -273,7 +254,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
 
                 <div>
                   <label htmlFor={`${ids}-message`} className={label}>
-                    Message <span className="normal-case tracking-normal text-ink-faint/70">(optional)</span>
+                    {t.message} <span className="normal-case tracking-normal text-ink-faint/70">{t.optional}</span>
                   </label>
                   <textarea
                     id={`${ids}-message`}
@@ -281,7 +262,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                     rows={4}
                     maxLength={2000}
                     defaultValue={c.message}
-                    placeholder="Questions, preferred viewing dates, or anything we should know."
+                    placeholder={t.messagePlaceholder}
                     className={cn(input, "h-auto resize-none py-3 leading-relaxed")}
                   />
                 </div>
@@ -289,12 +270,14 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                 <div className="flex items-start gap-3 rounded-xl border border-gold/15 bg-gold-mist px-4 py-3.5">
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden />
                   <p className="font-body text-xs leading-relaxed text-ink-muted">
-                    A member of the CryptoProperties Uruguay team will contact you personally to follow up on
-                    this inquiry. Your details are handled confidentially in line with our{" "}
-                    <Link href="/legal/privacy" className="text-gold-bright underline decoration-gold/40 underline-offset-2">
-                      Privacy Policy
+                    {t.noticeBefore}{" "}
+                    <Link
+                      href={localePath(lang, "/legal/privacy")}
+                      className="text-gold-bright underline decoration-gold/40 underline-offset-2"
+                    >
+                      {t.privacyLink}
                     </Link>
-                    .
+                    {t.noticeAfter}
                   </p>
                 </div>
 
@@ -306,7 +289,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                       className="mt-2 inline-flex items-center gap-1.5 text-gold-bright underline decoration-gold/40 underline-offset-2"
                     >
                       <Mail className="h-3.5 w-3.5" aria-hidden />
-                      Email us directly at {siteConfig.email}
+                      {format(t.emailUs, { email: siteConfig.email })}
                     </a>
                   </div>
                 )}
@@ -319,7 +302,7 @@ export function InquiryDialog({ open, intent, defaultContactMethod, property, on
                   {status === "submitting" ? (
                     <>
                       <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
-                      Sending…
+                      {t.sending}
                     </>
                   ) : (
                     c.submit

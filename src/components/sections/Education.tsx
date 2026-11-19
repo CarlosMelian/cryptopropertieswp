@@ -1,23 +1,24 @@
 import { ArrowRight } from "lucide-react";
-import { articles } from "@/lib/data";
+import type { HomeDict } from "@/i18n/dictionaries";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 
-export function Education() {
+export function Education({ t }: { t: HomeDict["insights"] }) {
+  const articles = t.items;
   return (
     <section id="insights" className="relative bg-graphite/30 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         <Reveal className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div>
-            <SectionEyebrow>Insights</SectionEyebrow>
+            <SectionEyebrow>{t.eyebrow}</SectionEyebrow>
             <h2 className="mt-5 max-w-xl font-display text-balance text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-              Education for the modern investor
+              {t.title}
             </h2>
           </div>
           <Button variant="secondary" size="md" className="shrink-0">
-            View All Insights
+            {t.viewAll}
           </Button>
         </Reveal>
 
@@ -39,7 +40,7 @@ export function Education() {
                     {article.readTime}
                   </span>
                   <span className="flex items-center gap-1.5 font-body text-sm text-gold-bright">
-                    Read article
+                    {t.readArticle}
                     <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                   </span>
                 </div>

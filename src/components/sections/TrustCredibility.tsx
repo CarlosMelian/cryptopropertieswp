@@ -1,17 +1,20 @@
-import { trustItems, statItems } from "@/lib/data";
+import { trustIcons, statValues } from "@/lib/data";
+import type { HomeDict } from "@/i18n/dictionaries";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 
-export function TrustCredibility() {
+export function TrustCredibility({ t }: { t: HomeDict["trust"] }) {
+  const trustItems = t.items.map((item, i) => ({ ...item, icon: trustIcons[i] }));
+  const statItems = statValues.map((s, i) => ({ ...s, label: t.stats[i] }));
   return (
     <section id="trust" className="relative bg-void py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         <Reveal>
-          <SectionEyebrow>Trust &amp; Credibility</SectionEyebrow>
+          <SectionEyebrow>{t.eyebrow}</SectionEyebrow>
           <h2 className="mt-5 max-w-2xl font-display text-balance text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-            Why investors trust us with capital that originated on-chain
+            {t.title}
           </h2>
         </Reveal>
 
@@ -56,7 +59,7 @@ export function TrustCredibility() {
             </div>
           </div>
           <p className="mt-3 text-center font-mono text-[0.65rem] uppercase tracking-widest2 text-ink-faint">
-            Illustrative figures
+            {t.illustrative}
           </p>
         </Reveal>
       </div>

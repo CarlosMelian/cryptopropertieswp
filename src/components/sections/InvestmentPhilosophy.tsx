@@ -1,20 +1,20 @@
-import { philosophyItems } from "@/lib/data";
+import { philosophyIcons } from "@/lib/data";
+import type { HomeDict } from "@/i18n/dictionaries";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 
-export function InvestmentPhilosophy() {
+export function InvestmentPhilosophy({ t }: { t: HomeDict["philosophy"] }) {
+  const philosophyItems = t.items.map((item, i) => ({ ...item, icon: philosophyIcons[i] }));
   return (
     <section className="relative bg-graphite/30 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         <Reveal className="mx-auto max-w-3xl text-center">
-          <SectionEyebrow align="center">Investment Philosophy</SectionEyebrow>
+          <SectionEyebrow align="center">{t.eyebrow}</SectionEyebrow>
           <h2 className="mt-5 font-display text-balance text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-            Beyond Real Estate. Building Long-Term Wealth.
+            {t.title}
           </h2>
           <p className="mt-5 font-body text-balance text-[0.95rem] leading-relaxed text-ink-muted">
-            We see real estate as one piece of a broader approach to wealth
-            that began on-chain. Every recommendation is grounded in
-            preservation and structure, not speculation.
+            {t.intro}
           </p>
         </Reveal>
 
@@ -37,9 +37,7 @@ export function InvestmentPhilosophy() {
         </div>
 
         <p className="mx-auto mt-16 max-w-2xl text-center font-mono text-[0.7rem] leading-relaxed text-ink-faint">
-          This section describes our investment approach, not a forecast or
-          guarantee of performance. CryptoProperties Uruguay does not provide
-          investment, legal, or tax advice.
+          {t.disclaimer}
         </p>
       </div>
     </section>

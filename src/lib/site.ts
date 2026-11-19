@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+
 /**
  * Site-wide contact configuration. Values come from environment variables so
  * they can differ between preview and production deployments on Vercel.
@@ -14,8 +16,8 @@ export const siteConfig = {
   whatsappNumber: (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "").replace(/\D/g, ""),
 } as const;
 
-export function propertyUrl(slug: string) {
-  return `${siteConfig.url}/properties/${slug}`;
+export function propertyUrl(slug: string, locale: Locale) {
+  return `${siteConfig.url}/${locale}/properties/${slug}`;
 }
 
 export function whatsappLink(message: string) {

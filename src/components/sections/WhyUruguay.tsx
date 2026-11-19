@@ -1,15 +1,17 @@
-import { advantageItems } from "@/lib/data";
+import { advantageIcons } from "@/lib/data";
+import type { HomeDict } from "@/i18n/dictionaries";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 
-export function WhyUruguay() {
+export function WhyUruguay({ t }: { t: HomeDict["whyUruguay"] }) {
+  const advantageItems = t.items.map((item, i) => ({ ...item, icon: advantageIcons[i] }));
   return (
     <section id="why-uruguay" className="relative bg-graphite/30 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         <Reveal>
-          <SectionEyebrow>Why Uruguay</SectionEyebrow>
+          <SectionEyebrow>{t.eyebrow}</SectionEyebrow>
           <h2 className="mt-5 max-w-2xl font-display text-balance text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-            A market built on stability, not speculation
+            {t.title}
           </h2>
         </Reveal>
 

@@ -16,42 +16,47 @@ import {
   formatArea,
   formatLocation,
   formatPrice,
-  getAllProperties,
   getPropertyBySlug,
   getPropertyImages,
+  getPropertySlugs,
   getRelatedProperties,
-  propertyStatusLabels,
-  propertyTypeLabels,
 } from "@/lib/properties";
 import { propertyUrl, siteConfig } from "@/lib/site";
+import { getDictionary } from "@/i18n/dictionaries";
+import { format, isLocale, languageAlternates, localePath, localeTags } from "@/i18n/config";
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
+type Props = PageProps<"/[lang]/properties/[slug]">;
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllProperties().map((p) => ({ slug: p.slug }));
+  return getPropertySlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) return {};
+  const property = getPropertyBySlug(slug, lang);
   if (!property) return {};
+  const t = getDictionary(lang).properties;
 
-  const title = `${property.title} | ${formatPrice(property.price)}`;
-  const description = `${property.shortDescription} ${propertyTypeLabels[property.type]} in ${formatLocation(property.location)}.`;
+  const title = `${property.title} | ${formatPrice(property.price, lang)}`;
+  const description = `${property.shortDescription} ${format(t.detail.metaSuffix, {
+    type: t.types[property.type],
+    location: formatLocation(property.location),
+  })}`;
+  const path = `/properties/${property.slug}`;
 
   return {
     title,
     description,
-    alternates: { canonical: `/properties/${property.slug}` },
+    alternates: { canonical: `/${lang}${path}`, languages: languageAlternates(path) },
     openGraph: {
       type: "website",
+      locale: localeTags[lang].og,
       title: `${title} | ${siteConfig.name}`,
       description: property.shortDescription,
-      url: `/properties/${property.slug}`,
+      url: `/${lang}${path}`,
       images: [{ url: property.mainImage.src, width: 2400, height: 1600, alt: property.mainImage.alt }],
     },
     twitter: {
@@ -63,21 +68,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function PropertyPage({ params }: PageProps) {
-  const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+export default async function PropertyPage({ params }: Props) {
+  const { lang, slug } = await params;
+  if (!isLocale(lang)) notFound();
+  const property = getPropertyBySlug(slug, lang);
   if (!property) notFound();
 
+  const t = getDictionary(lang).properties;
   const images = getPropertyImages(property);
-  const related = getRelatedProperties(property);
-  const url = propertyUrl(property.slug);
+  const related = getRelatedProperties(property, lang);
+  const url = propertyUrl(property.slug, lang);
 
   const facts = [
-    { icon: House, label: "Type", value: propertyTypeLabels[property.type] },
-    property.bedrooms !== undefined && { icon: BedDouble, label: "Bedrooms", value: String(property.bedrooms) },
-    property.bathrooms !== undefined && { icon: Bath, label: "Bathrooms", value: String(property.bathrooms) },
-    property.builtArea !== undefined && { icon: Ruler, label: "Built area", value: formatArea(property.builtArea) },
-    property.landArea !== undefined && { icon: LandPlot, label: "Land area", value: formatArea(property.landArea) },
+    { icon: House, label: t.facts.type, value: t.types[property.type] },
+    property.bedrooms !== undefined && { icon: BedDouble, label: t.facts.bedrooms, value: String(property.bedrooms) },
+    property.bathrooms !== undefined && { icon: Bath, label: t.facts.bathrooms, value: String(property.bathrooms) },
+    property.builtArea !== undefined && { icon: Ruler, label: t.facts.builtArea, value: formatArea(property.builtArea, lang) },
+    property.landArea !== undefined && { icon: LandPlot, label: t.facts.landArea, value: formatArea(property.landArea, lang) },
   ].filter(Boolean) as { icon: typeof House; label: string; value: string }[];
 
   const jsonLd = {
@@ -86,6 +93,7 @@ export default async function PropertyPage({ params }: PageProps) {
     name: property.title,
     description: property.shortDescription,
     url,
+    inLanguage: localeTags[lang].html,
     image: images.map((i) => i.src),
     offers: {
       "@type": "Offer",
@@ -121,10 +129,10 @@ export default async function PropertyPage({ params }: PageProps) {
 
         <div className="relative mx-auto max-w-8xl px-6 pt-32 sm:px-10 sm:pt-36 lg:px-16">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-ink-faint">
-            <Link href="/properties" className="group inline-flex items-center gap-2 transition-colors hover:text-gold-bright">
+          <nav aria-label={t.detail.breadcrumb} className="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-ink-faint">
+            <Link href={localePath(lang, "/properties")} className="group inline-flex items-center gap-2 transition-colors hover:text-gold-bright">
               <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5" aria-hidden />
-              All Properties
+              {t.detail.allProperties}
             </Link>
             <span aria-hidden className="text-graphite-border">/</span>
             <span className="truncate text-ink-muted" aria-current="page">
@@ -136,10 +144,10 @@ export default async function PropertyPage({ params }: PageProps) {
           <header className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
               <div className="flex flex-wrap items-center gap-3">
-                <span className="eyebrow">{propertyTypeLabels[property.type]}</span>
+                <span className="eyebrow">{t.types[property.type]}</span>
                 {property.status !== "available" && (
                   <span className="rounded-full border border-gold/40 bg-gold/10 px-3 py-0.5 font-mono text-[0.625rem] uppercase tracking-widest2 text-gold-bright">
-                    {propertyStatusLabels[property.status]}
+                    {t.status[property.status]}
                   </span>
                 )}
               </div>
@@ -152,10 +160,10 @@ export default async function PropertyPage({ params }: PageProps) {
               </p>
             </div>
             <div className="lg:text-right">
-              <span className="block font-mono text-[0.625rem] uppercase tracking-widest2 text-ink-faint">Asking price</span>
+              <span className="block font-mono text-[0.625rem] uppercase tracking-widest2 text-ink-faint">{t.card.askingPrice}</span>
               <span className="mt-1 block font-display text-3xl text-ink sm:text-4xl">
-                {formatPrice(property.price)}
-                <span className="ml-2 font-mono text-xs tracking-widest2 text-ink-faint">USD</span>
+                {formatPrice(property.price, lang)}
+                {lang === "en" && <span className="ml-2 font-mono text-xs tracking-widest2 text-ink-faint">USD</span>}
               </span>
             </div>
           </header>
@@ -169,12 +177,12 @@ export default async function PropertyPage({ params }: PageProps) {
           <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-16 xl:grid-cols-[minmax(0,1fr)_26rem]">
             <div className="min-w-0 space-y-14">
               {/* Key facts */}
-              <section aria-label="Key facts">
+              <section aria-label={t.detail.keyFacts}>
                 <dl className="grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fit,minmax(9.5rem,1fr))]">
                   {facts.map((f) => (
                     <div key={f.label} className="rounded-2xl border border-graphite-border bg-graphite/40 px-5 py-5">
                       <dt className="flex items-center gap-2 font-mono text-[0.625rem] uppercase tracking-[0.18em] text-ink-faint">
-                        <f.icon className="h-3.5 w-3.5 text-gold/80" aria-hidden />
+                        <f.icon className="h-3.5 w-3.5 shrink-0 text-gold/80" aria-hidden />
                         {f.label}
                       </dt>
                       <dd className="mt-2 font-display text-lg text-ink">{f.value}</dd>
@@ -185,7 +193,7 @@ export default async function PropertyPage({ params }: PageProps) {
 
               {/* Description */}
               <section aria-labelledby="about-heading">
-                <SectionEyebrow>About the property</SectionEyebrow>
+                <SectionEyebrow>{t.detail.about}</SectionEyebrow>
                 <h2 id="about-heading" className="mt-5 text-balance font-display text-2xl leading-snug text-ink sm:text-3xl">
                   {property.shortDescription}
                 </h2>
@@ -199,9 +207,9 @@ export default async function PropertyPage({ params }: PageProps) {
               {/* Amenities */}
               {property.amenities.length > 0 && (
                 <section aria-labelledby="amenities-heading">
-                  <SectionEyebrow>Features & Amenities</SectionEyebrow>
+                  <SectionEyebrow>{t.detail.amenities}</SectionEyebrow>
                   <h2 id="amenities-heading" className="sr-only">
-                    Features and amenities
+                    {t.detail.amenities}
                   </h2>
                   <ul className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
                     {property.amenities.map((a) => (
@@ -235,16 +243,16 @@ export default async function PropertyPage({ params }: PageProps) {
             <section aria-labelledby="related-heading" className="mt-24 border-t border-graphite-border pb-28 pt-16">
               <div className="flex items-end justify-between gap-6">
                 <div>
-                  <SectionEyebrow>Continue exploring</SectionEyebrow>
+                  <SectionEyebrow>{t.detail.relatedEyebrow}</SectionEyebrow>
                   <h2 id="related-heading" className="mt-5 font-display text-2xl text-ink sm:text-3xl">
-                    You may also consider
+                    {t.detail.relatedTitle}
                   </h2>
                 </div>
                 <Link
-                  href="/properties"
+                  href={localePath(lang, "/properties")}
                   className="hidden whitespace-nowrap font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-ink-faint transition-colors hover:text-gold-bright sm:block"
                 >
-                  View all properties →
+                  {t.detail.viewAll} →
                 </Link>
               </div>
               <ul className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8 xl:grid-cols-3">

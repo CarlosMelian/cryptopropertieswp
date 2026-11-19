@@ -4,28 +4,13 @@ import { motion } from "framer-motion";
 import { ArrowDown, Bitcoin, Building2, Coins, ShieldCheck, Clock3 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { GlassCard } from "@/components/ui/GlassCard";
+import type { HomeDict } from "@/i18n/dictionaries";
 
-const credentials = ["Legal", "Secure", "Compliant", "Built for the modern investor"];
+const cardIcons = [Coins, Clock3, ShieldCheck];
 
-const floatingCards = [
-  {
-    icon: Coins,
-    label: "Accepted Assets",
-    value: "BTC · ETH · USDT · USDC",
-  },
-  {
-    icon: Clock3,
-    label: "Avg. Closing Timeline",
-    value: "45–60 Days",
-  },
-  {
-    icon: ShieldCheck,
-    label: "Every Transaction",
-    value: "AML & Source-of-Funds Verified",
-  },
-];
-
-export function Hero() {
+export function Hero({ t }: { t: HomeDict["hero"] }) {
+  const credentials = t.credentials;
+  const floatingCards = t.cards.map((card, i) => ({ ...card, icon: cardIcons[i] }));
   return (
     <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-void pt-28 sm:pt-32">
       {/* Background atmosphere */}
@@ -52,7 +37,7 @@ export function Hero() {
           className="flex items-center gap-3 rounded-full border border-graphite-border bg-graphite/60 px-4 py-1.5"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse-slow" />
-          <span className="eyebrow">Private Wealth Advisory · Montevideo</span>
+          <span className="eyebrow">{t.eyebrow}</span>
         </motion.div>
 
         <motion.h1
@@ -61,9 +46,9 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="mt-8 font-display text-balance text-[2.6rem] leading-[1.08] text-ink sm:text-6xl lg:text-7xl"
         >
-          Transform Crypto Wealth Into{" "}
+          {t.titleLead}{" "}
           <span className="bg-gradient-to-r from-gold-bright via-gold to-gold-deep bg-clip-text text-transparent">
-            Real Estate Ownership
+            {t.titleHighlight}
           </span>
         </motion.h1>
 
@@ -73,8 +58,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.22 }}
           className="mt-7 max-w-2xl font-body text-balance text-lg text-ink-muted sm:text-xl"
         >
-          Buy, sell, and invest in premium Uruguayan real estate using
-          capital generated through cryptocurrency.
+          {t.subtitle}
         </motion.p>
 
         <motion.div
@@ -101,9 +85,9 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.42 }}
           className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
         >
-          <Button size="lg">Schedule a Private Consultation</Button>
+          <Button size="lg">{t.ctaPrimary}</Button>
           <Button size="lg" variant="secondary" icon={false}>
-            Discover Our Services
+            {t.ctaSecondary}
           </Button>
         </motion.div>
 

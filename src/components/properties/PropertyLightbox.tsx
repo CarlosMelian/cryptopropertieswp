@@ -7,6 +7,8 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { PropertyImage } from "@/types";
 import { useModalBehavior } from "@/hooks/useModalBehavior";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/I18nProvider";
+import { format } from "@/i18n/config";
 
 interface PropertyLightboxProps {
   images: PropertyImage[];
@@ -25,6 +27,7 @@ export function PropertyLightbox({ images, title, index, onIndexChange, onClose 
   const closeRef = useRef<HTMLButtonElement>(null);
   const thumbsRef = useRef<HTMLDivElement>(null);
   const count = images.length;
+  const t = useI18n().properties.gallery;
 
   useModalBehavior(open, onClose);
 
@@ -70,7 +73,7 @@ export function PropertyLightbox({ images, title, index, onIndexChange, onClose 
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label={`${title}: photo gallery`}
+          aria-label={format(t.dialogLabel, { title })}
           className="fixed inset-0 z-[100] flex flex-col bg-void/[0.97] backdrop-blur-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -89,7 +92,7 @@ export function PropertyLightbox({ images, title, index, onIndexChange, onClose 
               ref={closeRef}
               type="button"
               onClick={onClose}
-              aria-label="Close gallery"
+              aria-label={t.close}
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 text-ink transition-colors hover:border-gold/40 hover:text-gold-bright"
             >
               <X className="h-5 w-5" />
@@ -144,7 +147,7 @@ export function PropertyLightbox({ images, title, index, onIndexChange, onClose 
                 <button
                   type="button"
                   onClick={() => go(-1)}
-                  aria-label="Previous photo"
+                  aria-label={t.previous}
                   className="absolute left-3 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-void/50 text-ink backdrop-blur-md transition-colors hover:border-gold/40 hover:text-gold-bright sm:flex lg:left-8"
                 >
                   <ChevronLeft className="h-5 w-5" />
@@ -152,7 +155,7 @@ export function PropertyLightbox({ images, title, index, onIndexChange, onClose 
                 <button
                   type="button"
                   onClick={() => go(1)}
-                  aria-label="Next photo"
+                  aria-label={t.next}
                   className="absolute right-3 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-void/50 text-ink backdrop-blur-md transition-colors hover:border-gold/40 hover:text-gold-bright sm:flex lg:right-8"
                 >
                   <ChevronRight className="h-5 w-5" />
@@ -178,7 +181,7 @@ export function PropertyLightbox({ images, title, index, onIndexChange, onClose 
                       setDirection(i > index ? 1 : -1);
                       onIndexChange(i);
                     }}
-                    aria-label={`Show photo ${i + 1}`}
+                    aria-label={format(t.showPhoto, { n: i + 1 })}
                     aria-current={i === index}
                     className={cn(
                       "relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border transition-all duration-300 sm:h-16 sm:w-24",
