@@ -55,7 +55,7 @@ export function Footer({ lang, dict }: { lang: Locale; dict: CommonDict }) {
             <Link href={p("/")} className="flex items-center gap-2.5 text-ink">
               <BridgeMark className="h-7 w-7 text-gold" />
               <span className="font-display text-base tracking-wide">
-                CryptoProperties Uruguay
+                UyCrypto Real Estate
               </span>
             </Link>
             <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-ink-muted">
@@ -123,7 +123,7 @@ export function Footer({ lang, dict }: { lang: Locale; dict: CommonDict }) {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-graphite-border pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-body text-xs text-ink-faint">
-            © {new Date().getFullYear()} CryptoProperties Uruguay. {t.rights}
+            © {new Date().getFullYear()} UyCrypto Real Estate. {t.rights}
           </p>
           <p className="max-w-xl font-body text-xs text-ink-faint">{t.disclaimer}</p>
         </div>

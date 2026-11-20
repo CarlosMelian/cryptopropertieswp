@@ -9,7 +9,7 @@ interface PageSeo {
   path: string;
   title: string;
   description: string;
-  /** Use the title as-is instead of appending " | CryptoProperties Uruguay". */
+  /** Use the title as-is instead of appending " | UyCrypto Real Estate". */
   absoluteTitle?: boolean;
   /** Defaults to the branded share image for the locale. */
   image?: { url: string; width: number; height: number; alt: string };

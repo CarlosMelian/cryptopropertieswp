@@ -5,7 +5,7 @@ import type { Locale } from "@/i18n/config";
  * they can differ between preview and production deployments on Vercel.
  */
 export const siteConfig = {
-  name: "CryptoProperties Uruguay",
+  name: "UyCrypto Real Estate",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.cryptoproperties.uy").replace(/\/$/, ""),
   email: "contact@cryptoproperties.uy",
   /**

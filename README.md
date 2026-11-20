@@ -1,4 +1,4 @@
-# CryptoProperties Uruguay
+# UyCrypto Real Estate
 
 A luxury crypto-wealth-to-real-estate advisory website built with Next.js 15 (App Router), TypeScript, Tailwind CSS, and Framer Motion.
 

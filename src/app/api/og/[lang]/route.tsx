@@ -41,7 +41,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ lang: s
             <path d="M11 8L4.5 23M11 8L17 23M21 8L27.5 23M21 8L15 23" stroke={GOLD} strokeWidth="0.85" strokeLinecap="round" opacity="0.65" />
           </svg>
           <div style={{ display: "flex", fontSize: 34, letterSpacing: 1 }}>
-            CryptoProperties<span style={{ color: "#A8A9B3", marginLeft: 12 }}>Uruguay</span>
+            UyCrypto<span style={{ color: "#A8A9B3", marginLeft: 12 }}>Real Estate</span>
           </div>
         </div>
 

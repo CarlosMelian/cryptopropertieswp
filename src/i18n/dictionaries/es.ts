@@ -2,9 +2,9 @@ import type { Dictionary } from "./en";
 
 export const es: Dictionary = {
   meta: {
-    title: "CryptoProperties Uruguay | Asesoramiento inmobiliario con capital cripto",
+    title: "UyCrypto Real Estate | Asesoramiento inmobiliario con capital cripto",
     description:
-      "CryptoProperties Uruguay es el puente entre el patrimonio cripto y el mercado inmobiliario uruguayo. Ayudamos a tenedores de activos digitales e inversores internacionales a comprar, vender e invertir en propiedades en Uruguay, de forma legal, segura y en cumplimiento normativo.",
+      "UyCrypto Real Estate es el puente entre el patrimonio cripto y el mercado inmobiliario uruguayo. Ayudamos a tenedores de activos digitales e inversores internacionales a comprar, vender e invertir en propiedades en Uruguay, de forma legal, segura y en cumplimiento normativo.",
     ogDescription:
       "El puente entre el patrimonio cripto y el mercado inmobiliario uruguayo. Legal, seguro y pensado para el inversor moderno.",
     twitterDescription: "El puente entre el patrimonio cripto y el mercado inmobiliario uruguayo.",
@@ -22,7 +22,7 @@ export const es: Dictionary = {
       "apartamentos en venta Montevideo",
     ],
     schemaDescription: "Firma de asesoramiento que conecta a inversores en criptomonedas con el mercado inmobiliario uruguayo.",
-    homeTitle: "Comprar propiedades en Uruguay con cripto | CryptoProperties Uruguay",
+    homeTitle: "Comprar propiedades en Uruguay con cripto | UyCrypto Real Estate",
     homeDescription:
       "Compre, venda e invierta en inmuebles en Uruguay con Bitcoin, USDT y otras criptomonedas, con respaldo legal, notarial y de cumplimiento. Una empresa de UyCryptomonedas.",
     ogTagline: "Propiedades en Uruguay para inversores cripto",
@@ -31,11 +31,11 @@ export const es: Dictionary = {
 
   common: {
     whatsapp: {
-      consultation: "Hola CryptoProperties Uruguay, me gustaría agendar una consulta privada.",
-      services: "Hola CryptoProperties Uruguay, me gustaría conocer más sobre sus servicios.",
-      service: "Hola CryptoProperties Uruguay, me gustaría recibir más información sobre: {service}.",
-      insights: "Hola CryptoProperties Uruguay, me gustaría recibir su contenido educativo sobre cómo invertir en Uruguay con cripto.",
-      article: "Hola CryptoProperties Uruguay, me interesa este tema: {title}.",
+      consultation: "Hola UyCrypto Real Estate, me gustaría agendar una consulta privada.",
+      services: "Hola UyCrypto Real Estate, me gustaría conocer más sobre sus servicios.",
+      service: "Hola UyCrypto Real Estate, me gustaría recibir más información sobre: {service}.",
+      insights: "Hola UyCrypto Real Estate, me gustaría recibir su contenido educativo sobre cómo invertir en Uruguay con cripto.",
+      article: "Hola UyCrypto Real Estate, me interesa este tema: {title}.",
     },
     nav: {
       services: "Servicios",
@@ -74,7 +74,7 @@ export const es: Dictionary = {
       },
       rights: "Todos los derechos reservados.",
       disclaimer:
-        "CryptoProperties Uruguay es una firma de asesoramiento y no brinda asesoramiento de inversión, legal ni tributario. Todas las operaciones están sujetas a revisión legal, notarial y tributaria independiente.",
+        "UyCrypto Real Estate es una firma de asesoramiento y no brinda asesoramiento de inversión, legal ni tributario. Todas las operaciones están sujetas a revisión legal, notarial y tributaria independiente.",
     },
     notFound: {
       eyebrow: "404",
@@ -139,7 +139,7 @@ export const es: Dictionary = {
       illustrative: "Cifras ilustrativas",
       parent: {
         eyebrow: "Nuestra empresa madre",
-        text: "CryptoProperties Uruguay forma parte de UyCryptomonedas, que compra y vende USDT, Bitcoin y Ethereum en Uruguay y cuenta con oficinas en Montevideo, Punta del Este y Mercedes.",
+        text: "UyCrypto Real Estate forma parte de UyCryptomonedas, que compra y vende USDT, Bitcoin y Ethereum en Uruguay y cuenta con oficinas en Montevideo, Punta del Este y Mercedes.",
         cta: "Visitar uycryptomonedas.com",
       },
     },
@@ -287,7 +287,7 @@ export const es: Dictionary = {
         },
       ],
       disclaimer:
-        "Esta sección describe nuestro enfoque de inversión, no una proyección ni una garantía de rendimiento. CryptoProperties Uruguay no brinda asesoramiento de inversión, legal ni tributario.",
+        "Esta sección describe nuestro enfoque de inversión, no una proyección ni una garantía de rendimiento. UyCrypto Real Estate no brinda asesoramiento de inversión, legal ni tributario.",
     },
     testimonials: {
       eyebrow: "La voz de nuestros clientes",
@@ -468,8 +468,8 @@ export const es: Dictionary = {
       text: "Solicite la información completa, coordine una visita privada o un recorrido por video con uno de nuestros asesores.",
       requestInfo: "Solicitar información",
       whatsapp: "Contactar por WhatsApp",
-      note: "Un asesor de CryptoProperties Uruguay se pondrá en contacto con usted personalmente. Su consulta se trata de forma confidencial.",
-      whatsappMessage: "Hola CryptoProperties Uruguay, me interesa la propiedad \"{title}\" ({price}).\n{url}",
+      note: "Un asesor de UyCrypto Real Estate se pondrá en contacto con usted personalmente. Su consulta se trata de forma confidencial.",
+      whatsappMessage: "Hola UyCrypto Real Estate, me interesa la propiedad \"{title}\" ({price}).\n{url}",
     },
     crypto: {
       eyebrow: "Compras con cripto",
@@ -520,12 +520,12 @@ export const es: Dictionary = {
       optional: "(opcional)",
       messagePlaceholder: "Preguntas, fechas preferidas para visitar o cualquier dato que debamos saber.",
       noticeBefore:
-        "Un integrante del equipo de CryptoProperties Uruguay se pondrá en contacto con usted personalmente para dar seguimiento a esta consulta. Sus datos se tratan de forma confidencial conforme a nuestra",
+        "Un integrante del equipo de UyCrypto Real Estate se pondrá en contacto con usted personalmente para dar seguimiento a esta consulta. Sus datos se tratan de forma confidencial conforme a nuestra",
       privacyLink: "Política de privacidad",
       noticeAfter: ".",
       sending: "Enviando…",
       thankYou: "Gracias",
-      successText: "Un asesor de CryptoProperties Uruguay se pondrá en contacto con usted {method} en relación con",
+      successText: "Un asesor de UyCrypto Real Estate se pondrá en contacto con usted {method} en relación con",
       emailUs: "Escríbanos directamente a {email}",
       errors: {
         generic: "No pudimos enviar su solicitud.",
@@ -558,12 +558,12 @@ export const es: Dictionary = {
     },
     privacy: {
       title: "Política de privacidad",
-      description: "Cómo CryptoProperties Uruguay recopila, utiliza y protege la información de sus clientes.",
+      description: "Cómo UyCrypto Real Estate recopila, utiliza y protege la información de sus clientes.",
       lastUpdated: "junio de 2026",
       sections: [
         {
           paragraphs: [
-            "CryptoProperties Uruguay (\"nosotros\" o \"la Empresa\") respeta la privacidad de cada visitante, cliente potencial y cliente verificado que interactúa con nuestro sitio web y nuestros servicios de asesoramiento. Esta política describe, en términos generales, las categorías de información que recopilamos, cómo se utiliza y las opciones de las que usted dispone.",
+            "UyCrypto Real Estate (\"nosotros\" o \"la Empresa\") respeta la privacidad de cada visitante, cliente potencial y cliente verificado que interactúa con nuestro sitio web y nuestros servicios de asesoramiento. Esta política describe, en términos generales, las categorías de información que recopilamos, cómo se utiliza y las opciones de las que usted dispone.",
           ],
         },
         {
@@ -604,18 +604,18 @@ export const es: Dictionary = {
     },
     terms: {
       title: "Términos del servicio",
-      description: "Los términos que rigen el uso del sitio web y de los servicios de asesoramiento de CryptoProperties Uruguay.",
+      description: "Los términos que rigen el uso del sitio web y de los servicios de asesoramiento de UyCrypto Real Estate.",
       lastUpdated: "junio de 2026",
       sections: [
         {
           paragraphs: [
-            "Estos Términos del servicio rigen su acceso y uso del sitio web de CryptoProperties Uruguay y de los servicios de asesoramiento allí descritos. Al utilizar este sitio web, usted acepta los términos que se detallan a continuación.",
+            "Estos Términos del servicio rigen su acceso y uso del sitio web de UyCrypto Real Estate y de los servicios de asesoramiento allí descritos. Al utilizar este sitio web, usted acepta los términos que se detallan a continuación.",
           ],
         },
         {
           heading: "Naturaleza de nuestros servicios",
           paragraphs: [
-            "CryptoProperties Uruguay actúa como intermediario de asesoramiento que conecta a tenedores de activos digitales con el mercado inmobiliario uruguayo. No somos una inmobiliaria habilitada, un estudio jurídico, una escribanía, un banco ni un asesor de inversiones registrado. Las operaciones inmobiliarias, la conversión de moneda y la transferencia legal del título son realizadas por terceros independientes debidamente habilitados.",
+            "UyCrypto Real Estate actúa como intermediario de asesoramiento que conecta a tenedores de activos digitales con el mercado inmobiliario uruguayo. No somos una inmobiliaria habilitada, un estudio jurídico, una escribanía, un banco ni un asesor de inversiones registrado. Las operaciones inmobiliarias, la conversión de moneda y la transferencia legal del título son realizadas por terceros independientes debidamente habilitados.",
           ],
         },
         {
@@ -639,7 +639,7 @@ export const es: Dictionary = {
         {
           heading: "Limitación de responsabilidad",
           paragraphs: [
-            "En la máxima medida permitida por la ley aplicable, CryptoProperties Uruguay no será responsable por daños indirectos, incidentales o consecuentes derivados del uso de este sitio web o de la confianza depositada en la información aquí presentada.",
+            "En la máxima medida permitida por la ley aplicable, UyCrypto Real Estate no será responsable por daños indirectos, incidentales o consecuentes derivados del uso de este sitio web o de la confianza depositada en la información aquí presentada.",
           ],
         },
         {
@@ -669,7 +669,7 @@ export const es: Dictionary = {
         {
           heading: "Sin garantía de rentabilidad",
           paragraphs: [
-            "CryptoProperties Uruguay no promete, proyecta ni garantiza ninguna tasa de retorno, renta por alquiler ni valorización de los inmuebles adquiridos a través de nuestros servicios. Las referencias a nuestra filosofía de inversión en este sitio describen un enfoque, no una proyección.",
+            "UyCrypto Real Estate no promete, proyecta ni garantiza ninguna tasa de retorno, renta por alquiler ni valorización de los inmuebles adquiridos a través de nuestros servicios. Las referencias a nuestra filosofía de inversión en este sitio describen un enfoque, no una proyección.",
           ],
         },
         {
@@ -687,7 +687,7 @@ export const es: Dictionary = {
         {
           heading: "Dependencia de terceros",
           paragraphs: [
-            "Las operaciones dependen del desempeño de bancos, exchanges, abogados y escribanos independientes que no son empleados de CryptoProperties Uruguay. Seleccionamos a nuestros aliados con cuidado, pero no podemos garantizar su desempeño ni sus plazos.",
+            "Las operaciones dependen del desempeño de bancos, exchanges, abogados y escribanos independientes que no son empleados de UyCrypto Real Estate. Seleccionamos a nuestros aliados con cuidado, pero no podemos garantizar su desempeño ni sus plazos.",
           ],
         },
         {
@@ -704,7 +704,7 @@ export const es: Dictionary = {
       sections: [
         {
           paragraphs: [
-            "Unir activos digitales y propiedades reales conlleva una responsabilidad regulatoria particular. CryptoProperties Uruguay estructura cada encargo en torno a los principios de prevención de lavado de activos (PLA) y de conocimiento del cliente (KYC) aplicables según la ley uruguaya.",
+            "Unir activos digitales y propiedades reales conlleva una responsabilidad regulatoria particular. UyCrypto Real Estate estructura cada encargo en torno a los principios de prevención de lavado de activos (PLA) y de conocimiento del cliente (KYC) aplicables según la ley uruguaya.",
           ],
         },
         {
@@ -716,7 +716,7 @@ export const es: Dictionary = {
         {
           heading: "Conversión de moneda",
           paragraphs: [
-            "Los activos digitales se convierten a moneda fiduciaria a través de exchanges y entidades bancarias habilitadas y reguladas antes de utilizarse en una operación inmobiliaria. CryptoProperties Uruguay no custodia en ningún momento fondos ni activos digitales de sus clientes.",
+            "Los activos digitales se convierten a moneda fiduciaria a través de exchanges y entidades bancarias habilitadas y reguladas antes de utilizarse en una operación inmobiliaria. UyCrypto Real Estate no custodia en ningún momento fondos ni activos digitales de sus clientes.",
           ],
         },
         {
@@ -728,13 +728,13 @@ export const es: Dictionary = {
         {
           heading: "Monitoreo continuo",
           paragraphs: [
-            "Los encargos están sujetos a revisión continua conforme a las obligaciones de prevención de lavado aplicables, y CryptoProperties Uruguay se reserva el derecho de rechazar o dar por terminado un encargo cuando la documentación del origen de fondos no pueda acreditarse satisfactoriamente.",
+            "Los encargos están sujetos a revisión continua conforme a las obligaciones de prevención de lavado aplicables, y UyCrypto Real Estate se reserva el derecho de rechazar o dar por terminado un encargo cuando la documentación del origen de fondos no pueda acreditarse satisfactoriamente.",
           ],
         },
         {
           heading: "Obligaciones de reporte",
           paragraphs: [
-            "Cuando la ley lo exija, CryptoProperties Uruguay y sus instituciones aliadas cumplen con las obligaciones de reporte aplicables ante las autoridades regulatorias y de inteligencia financiera competentes de Uruguay.",
+            "Cuando la ley lo exija, UyCrypto Real Estate y sus instituciones aliadas cumplen con las obligaciones de reporte aplicables ante las autoridades regulatorias y de inteligencia financiera competentes de Uruguay.",
           ],
         },
       ],

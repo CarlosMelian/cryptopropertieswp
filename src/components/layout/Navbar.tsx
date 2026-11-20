@@ -48,9 +48,9 @@ export function Navbar() {
         <Link href={localePath(lang)} className="flex items-center gap-2.5 text-ink">
           <BridgeMark className="h-6 w-6 text-gold sm:h-7 sm:w-7" />
           <span className="font-display text-[0.95rem] leading-none tracking-wide sm:text-base">
-            CryptoProperties
+            UyCrypto
             <span className="ml-1.5 hidden text-ink-muted sm:inline">
-              Uruguay
+              Real Estate
             </span>
           </span>
         </Link>
