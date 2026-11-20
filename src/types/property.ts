@@ -64,6 +64,23 @@ export interface PropertyImageRecord {
 }
 
 /**
+ * Internal record of where a listing comes from (the partner agency that
+ * holds it). Never sent to the browser or shown on the site: it is stripped
+ * before pages receive a `Property`.
+ */
+export interface PropertySource {
+  agency: string;
+  /** The agency's own listing page. */
+  url: string;
+  /** The agency's reference code, when it shows one. */
+  reference?: string;
+  /** Agency contact for this listing, as published by the agency. */
+  contact?: string;
+  /** Date the listing was copied from the agency (YYYY-MM-DD). */
+  importedAt: string;
+}
+
+/**
  * How a listing is stored in src/lib/properties.ts: every visitor-facing text
  * carries all three languages. Pages receive a resolved `Property` instead.
  */
@@ -80,6 +97,8 @@ export interface PropertyRecord
   shortDescription: Localized;
   fullDescription: Localized<string[]>;
   amenities: Localized<string[]>;
+  /** Internal only: which agency the listing belongs to. */
+  source: PropertySource;
 }
 
 export type PriceSort = "featured" | "price-asc" | "price-desc";
